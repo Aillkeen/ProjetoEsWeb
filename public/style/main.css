@@ -9,13 +9,7 @@ a {
   background-color: #69ce5a;
   color: white;
 }
-.footer {
-  background-color: #dddddd;
-  height: 20%;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-}
+
 .navbar-header {
   height: 32px;
 }

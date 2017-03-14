@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Login">
+    <meta name="author" content="HelRaph">
+
+    <title>Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style\main.css" rel="stylesheet">
+    <link href="style\signin.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyD6DYXcI26VgRbSj1SwUbAOVjlRgIGfG0o",
+        authDomain: "projetoes-e219c.firebaseapp.com",
+        databaseURL: "https://projetoes-e219c.firebaseio.com",
+        storageBucket: "projetoes-e219c.appspot.com",
+        messagingSenderId: "382532629500"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+    <script>
+    /**
+     * Handles the sign in button press.
+     */
+    function toggleSignIn() {
+
+      if (firebase.auth().currentUser) {
+        // [START signout]
+        firebase.auth().signOut();
+        // [END signout]
+      } else {
+        var email = document.getElementById('inputUser').value;
+        var password = document.getElementById('inputPassword').value;
+        if (email.length < 4) {
+          alert('Please enter an email address.');
+          return;
+        }
+        if (password.length < 4) {
+          alert('Please enter a password.');
+          return;
+        }
+        // Sign in with email and pass.
+        // [START authwithemail]
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+          document.getElementById('quickstart-sign-in').disabled = false;
+          // [END_EXCLUDE]
+        });
+        // [END authwithemail]
+      }
+      document.getElementById('quickstart-sign-in').disabled = true;
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          location.href="main.html"
+        }
+      });
+
+    }
+    </script>
+  </head>
+  <body>
+
+    <div class="container">
+     <div class="row">
+      <form class="form-signin col-md-4 col-sm-offset-4">
+        <img src="img\icone-login.png" class="img-responsive center-block">
+        <label for="inputUser" class="sr-only">Usuário</label>
+        <input type="user" id="inputUser" class="form-control" placeholder="Usuario" required autofocus>
+        <br>
+        <label for="inputPassword" class="sr-only">Senha</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+        <br>
+        <button class="btn btn-lg btn-success btn-block" id="quickstart-sign-in" type="submit" onclick="toggleSignIn()">Entrar</button>
+      </form>
+    </div>
+    <footer class="row"  align="center">
+     <br> <p>Mister Smart &reg;</p>
+    </footer>
+  </div>
+  </body>
+</html>
