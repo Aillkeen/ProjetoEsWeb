@@ -1,3 +1,4 @@
+
 window.onload = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -132,8 +133,4 @@ function laco(tipo) {
     else if (tipo == "serviços") {
       servicoList();
     }
-}
-
-function showObj(id) {
-  document.write(id);
 }
