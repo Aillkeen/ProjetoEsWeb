@@ -29,6 +29,30 @@
     </script>
     <!-- controller da view -->
     <script src="controller\main.js"></script>
+      <script>
+          function criaUser() {
+              let user = new usuario(
+                  document.getElementById('nome').value,
+                  document.getElementById('sexo').value,
+                  document.getElementById('email').value,
+                  document.getElementById('senha').value,
+                  document.getElementById('pontos').value
+              );
+
+              addUser(user);
+          }
+
+          function addUser(usuario) {
+              // Get a key for a new Post.
+              var newUserKey = firebase.database().ref().child('usuario').push().key;
+
+              // Write the new post's data simultaneously in the posts list and the user's post list.
+              var updates = {};
+              updates['/usuario/' + newUserKey] = usuario;
+
+              return firebase.database().ref().update(updates);
+          }
+      </script>
   </head>
 
   <body>
@@ -82,19 +106,38 @@
           <div class="col-md-5">
             <br><br><br>
             <div class="row">
-              <text>
-                ++++++++++++++++++++++++++++++<br>
-                quando selecionar e apertar<br>
-                em editar as informações   <br>
-                devem aparecer em uma      <br>
-                caixa aqui.                <br>
-                ++++++++++++++++++++++++++++++<br>
-              </text>
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" />
+                    </div>
+                    <div  class="form-group">
+                        <label>Sexo:</label>
+                        <input type="radio" name="sexo" value="Masculino"/> Masculino
+                        <input type="radio" name="sexo" value="Masculino"/> Masculino
+                    </div>
+                    <div  class="form-group">
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" />
+                    </div>
+                    <div  class="form-group">
+                        <label for="senha">Senha:</label>
+                        <input type="password" id="senha" />
+                    </div>
+                    <div  class="form-group">
+                        <label for="pontos">Pontos:</label>
+                        <input type="number" id="pontos" />
+                    </div>
+                    <div class="button">
+                        <button class="col-md-6 btn btn-success btn-sm" type="submit" onclick="criaUser()">Salvar</button>
+                    </div>
+                </form>
             </div>
             <br>
             <div class="row">
-              <button onclick="modObj(#id)" class="btn btn-primary btn-lg" type="button">Editar</button>
-              <button onclick="removeList(#id)" class="btn btn-danger btn-lg" type="button">Deletar</button>
+              <button class="btn btn-success btn-lg" type="button">Adicionar</button>
+              <button class="btn btn-primary btn-lg" type="button">Editar</button>
+              <button class="btn btn-danger btn-lg" type="button">Deletar</button>
             </div>
           </div>
         </div>
