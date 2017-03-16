@@ -9,117 +9,116 @@
 
     <title>MisterSmart</title>
 
-    <!-- Bootstrap core CSS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style\main.css" rel="stylesheet">
-
-    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
     <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyD6DYXcI26VgRbSj1SwUbAOVjlRgIGfG0o",
-        authDomain: "projetoes-e219c.firebaseapp.com",
-        databaseURL: "https://projetoes-e219c.firebaseio.com",
-        storageBucket: "projetoes-e219c.appspot.com",
-        messagingSenderId: "382532629500"
-      };
-      firebase.initializeApp(config);
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyD6DYXcI26VgRbSj1SwUbAOVjlRgIGfG0o",
+            authDomain: "projetoes-e219c.firebaseapp.com",
+            databaseURL: "https://projetoes-e219c.firebaseio.com",
+            storageBucket: "projetoes-e219c.appspot.com",
+            messagingSenderId: "382532629500"
+        };
+        firebase.initializeApp(config);
     </script>
-    <!-- controller da view -->
-    <script src="controller\main.js"></script>
     <script>
-      function criaUser() {
-          user = {
-              email: formcliente.email.value,
-              nome: formcliente.nome.value,
-              pontos: formcliente.pontos.value,
-              senha: formcliente.senha.value,
-              sexo : formcliente.sexo.value
-          };
-          addUser(user);
-      }
+          function criaUser() {
+              usuario = {
+                  email: formcliente.email.value,
+                  nome: formcliente.nome.value,
+                  pontos: formcliente.pontos.value,
+                  senha: formcliente.senha.value,
+                  sexo : formcliente.sexo.value
+              };
+              addUser(usuario);
+          }
 
-      function addUser(usuario) {
-          console.log("entrou na função addUser");
-          // Get a key for a new Post.
-          newUserKey = firebase.database().ref().child('usuario').push().key;
+          function addUser(usuario) {
+              // Get a key for a new Post.
+              newUserKey = firebase.database().ref().child('usuario').push().key;
 
-          // Write the new post's data simultaneously in the posts list and the user's post list.
-          updates = {};
-          updates['loja/usuario/' + newUserKey] = usuario;
+              // Write the new post's data simultaneously in the posts list and the user's post list.
+              updates = {};
+              updates['/loja/usuario/' + newUserKey] = usuario;
 
-          return firebase.database().ref().update(updates);
-      }
+              firebase.database().ref().update(updates);
+          }
 
-      function criaProduto() {
-          console.log("entrou na função criaProduto");
-          produto = {
-              nome: formproduto.nomeProd.value,
-              image: formproduto.imgProd.value,
-              descricao: formproduto.descProd.value,
-              ponto: formproduto.pontosProd.value
-          };
-          addProduto(produto);
-      }
+          function criaProduto() {
+              console.log("entrou na função criaProduto");
+              produto = {
+                  nome: formproduto.nomeProd.value,
+                  image: formproduto.imgProd.value,
+                  descricao: formproduto.descProd.value,
+                  ponto: formproduto.pontosProd.value
+              };
+              addProduto(produto);
+          }
 
-      function addProduto(produto) {
-          console.log("entrou na função addProduto");
-          // Get a key for a new Post.
-          newProdKey = firebase.database().ref().child('produto').push().key;
+          function addProduto(produto) {
+              console.log("entrou na função addProduto");
+              // Get a key for a new Post.
+              newProdKey = firebase.database().ref().child('produto').push().key;
 
-          // Write the new post's data simultaneously in the posts list and the user's post list.
-          updates = {};
-          updates['loja/produto/' + newProdKey] = produto;
+              // Write the new post's data simultaneously in the posts list and the user's post list.
+              updates = {};
+              updates['loja/produto/' + newProdKey] = produto;
 
-          return firebase.database().ref().update(updates);
-      }
+              return firebase.database().ref().update(updates);
+          }
 
-     function criaPromocao() {
-         console.log("entrou na função criaPromocao");
-         promocao = {
-             image: formpromocao.imgProm.value,
-             descricao: formpromocao.descProm.value
-         };
-         addPromocao(promocao);
-     }
+          function criaPromocao() {
+              console.log("entrou na função criaPromocao");
+              promocao = {
+                  image: formpromocao.imgProm.value,
+                  descricao: formpromocao.descProm.value
+              };
+              addPromocao(promocao);
+          }
 
-    function addPromocao(promocao) {
-        console.log("entrou na função addPromocao");
-        // Get a key for a new Post.
-        newPromKey = firebase.database().ref().child('promocao').push().key;
+          function addPromocao(promocao) {
+              console.log("entrou na função addPromocao");
+              // Get a key for a new Post.
+              newPromKey = firebase.database().ref().child('promocao').push().key;
 
-        // Write the new post's data simultaneously in the posts list and the user's post list.
-        updates = {};
-        updates['loja/promocao/' + newPromKey] = promocao;
+              // Write the new post's data simultaneously in the posts list and the user's post list.
+              updates = {};
+              updates['loja/promocao/' + newPromKey] = promocao;
 
-        return firebase.database().ref().update(updates);
-    }
-      function criaServico() {
-          console.log("entrou na função criaServico");
-          servico = {
-              nome: formservico.nomeServ.value,
-              image: formservico.imgServ.value,
-              descricao: formservico.descServ.value,
-              ponto: formservico.pontosServ.value
-          };
-          addServico(servico);
-      }
+              return firebase.database().ref().update(updates);
+          }
+          function criaServico() {
+              console.log("entrou na função criaServico");
+              servico = {
+                  nome: formservico.nomeServ.value,
+                  image: formservico.imgServ.value,
+                  descricao: formservico.descServ.value,
+                  ponto: formservico.pontosServ.value
+              };
+              addServico(servico);
+          }
 
-      function addServico(servico) {
-          console.log("entrou na função addServico");
-          // Get a key for a new Post.
-          newServKey = firebase.database().ref().child('servico').push().key;
+          function addServico(servico) {
+              console.log("entrou na função addServico");
+              // Get a key for a new Post.
+              newServKey = firebase.database().ref().child('servico').push().key;
 
-          // Write the new post's data simultaneously in the posts list and the user's post list.
-          updates = {};
-          updates['loja/servico/' + newServKey] = servico;
+              // Write the new post's data simultaneously in the posts list and the user's post list.
+              updates = {};
+              updates['loja/servico/' + newServKey] = servico;
 
-          return firebase.database().ref().update(updates);
-      }
+              return firebase.database().ref().update(updates);
+          }
 
-    </script>
+      </script>
+      <!-- Bootstrap core CSS -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <link href="style/main.css" rel="stylesheet">
+
+      <!-- controller da view -->
+      <script src="controller/main.js"></script>
   </head>
 
   <body>
@@ -139,37 +138,37 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <br>
           </div>
-          <div class="tab-content col-md-8">
+          <div class="tab-content col-md-9">
 
               <div id="clientes" class="tab-pane fade in active">
               <h3>Clientes</h3>
               <div class="row list-group nav-tabs">
-                  <div class="col-md-6">
+                  <div class="col-md-7">
                       <script>
                           laco("cliente");
                       </script>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-5">
                       <form id="formcliente">
                           <div class="form-group">
-                              <label for="nome">Nome:</label>
+                              <label for="nome">Nome:</label>&nbsp;
                               <input type="text" id="nome" />
                           </div>
                           <div  class="form-group" id="sexo">
-                              <label>Sexo:</label>
-                              <input type="radio" name="sexo" value="feminino"/>Feminino
-                              <input type="radio" name="sexo" value="masculino"/>Masculino
+                              <label for="sexo">Sexo:</label><br>
+                              <input type="radio" name="sexo" value="feminino"/>Feminino &nbsp;
+                              <input type="radio" name="sexo" value="masculino"/>Masculino &nbsp;
                               <input type="radio" name="sexo" value="outro"/>Outro
                           </div>
                           <div  class="form-group">
-                              <label for="email">E-mail:</label>
+                              <label for="email">E-mail:</label>&nbsp;
                               <input type="email" id="email" />
                           </div>
                           <div  class="form-group">
-                              <label for="senha">Senha:</label>
+                              <label for="senha">Senha:</label>&nbsp;
                               <input type="password" id="senha" />
                           </div>
                           <div  class="form-group">
@@ -177,7 +176,7 @@
                               <input type="number" id="pontos" />
                           </div>
                           <div class="button">
-                              <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-user" type="submit" onclick="criaUser()">Salvar</button>
+                              <button class="col-md-7 btn btn-success btn-sm" id="botao-salva-user" type="button" onclick="criaUser()">Salvar</button>
                           </div>
                       </form>
                       <br><br><br>
@@ -186,50 +185,51 @@
                           <button class="btn btn-success btn-lg" type="button">Adicionar</button>
                           <button class="btn btn-primary btn-lg" type="button">Editar</button>
                           <button class="btn btn-danger btn-lg" type="button">Deletar</button>
-                      </div>
+                      </div><br>
                   </div>
-
               </div>
             </div>
 
               <div id="produtos" class="tab-pane fade">
               <h3>Produtos</h3>
-              <div class="col-md-6">
-                <script>
-                    laco("produto");
-                </script>
-              </div>
+                  <div class="row list-group nav-tabs">
+                      <div class="col-md-6">
+                          <script>
+                              laco("produto");
+                          </script>
+                      </div>
 
-              <div class="col-md-6">
-                    <form id="formproduto">
-                        <div class="form-group">
-                            <label for="nomeProd">Nome:</label>
-                            <input type="text" id="nomeProd" />
-                        </div>
-                        <div  class="form-group">
-                            <label for="imgProd">Imagem do Produto:</label>
-                            <input type="file" id="imgProd" />
-                        </div>
-                        <div  class="form-group">
-                            <label for="descProd">Descrição:</label>
-                            <input type="text" id="descProd" />
-                        </div>
-                        <div  class="form-group">
-                            <label for="pontosProd">Pontos:</label>
-                            <input type="number" id="pontosProd" />
-                        </div>
-                        <div class="button">
-                            <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prod" type="submit" onclick="criaProduto()">Salvar</button>
-                        </div>
-                    </form>
-                    <br><br><br>
-                    <br>
-                    <div class="row">
-                        <button class="btn btn-success btn-lg" type="button">Adicionar</button>
-                        <button class="btn btn-primary btn-lg" type="button">Editar</button>
-                        <button class="btn btn-danger btn-lg" type="button">Deletar</button>
-                    </div>
-                </div>
+                      <div class="col-md-6">
+                          <form id="formproduto">
+                              <div class="form-group">
+                                  <label for="nomeProd">Nome:</label>
+                                  <input type="text" id="nomeProd" />
+                              </div>
+                              <div  class="form-group">
+                                  <label for="imgProd">Imagem do Produto:</label>
+                                  <input type="file" id="imgProd" />
+                              </div>
+                              <div  class="form-group">
+                                  <label for="descProd">Descrição:</label>
+                                  <input type="text" id="descProd" />
+                              </div>
+                              <div  class="form-group">
+                                  <label for="pontosProd">Pontos:</label>
+                                  <input type="number" id="pontosProd" />
+                              </div>
+                              <div class="button">
+                                  <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prod" type="button" onclick="criaProduto()">Salvar</button>
+                              </div>
+                          </form>
+                          <br><br><br>
+                          <br>
+                          <div class="row">
+                              <button class="btn btn-success btn-lg" type="button">Adicionar</button>
+                              <button class="btn btn-primary btn-lg" type="button">Editar</button>
+                              <button class="btn btn-danger btn-lg" type="button">Deletar</button>
+                          </div><br>
+                      </div>
+                  </div>
             </div>
 
             <div id="promocoes" class="tab-pane fade">
@@ -250,7 +250,7 @@
                               <input type="text" id="descProm" />
                           </div>
                           <div class="button">
-                              <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prom" type="submit" onclick="criaPromocao()">Salvar</button>
+                              <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prom" type="button" onclick="criaPromocao()">Salvar</button>
                           </div>
                       </form>
                       <br><br><br>
@@ -288,11 +288,10 @@
                             <input type="number" id="pontosServ" />
                         </div>
                         <div class="button">
-                            <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-serv" type="submit" onclick="criaServico()">Salvar</button>
+                            <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-serv" type="button" onclick="criaServico()">Salvar</button>
                         </div>
                     </form>
-                    <br><br><br>
-                    <br>
+                    <br><br>
                     <div class="row">
                         <button class="btn btn-success btn-lg" type="button">Adicionar</button>
                         <button class="btn btn-primary btn-lg" type="button">Editar</button>
@@ -301,11 +300,12 @@
                 </div>
              </div>
             </div>
+          </div>
         </div>
 
       <!-- rodape -->
       <footer class="row" align="center">
-       <br> <p>Mister Smart &reg;</p>
+       <br> <p>Mr Smart &reg;</p>
      </footer>
   </body>
 </html>

@@ -12,8 +12,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style\main.css" rel="stylesheet">
-    <link href="style\signin.css" rel="stylesheet">
+    <link href="style/main.css" rel="stylesheet">
+    <link href="style/signin.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -55,8 +55,8 @@
           var errorCode = error.code;
           var errorMessage = error.message;
           // [START_EXCLUDE]
-          if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password.');
+          if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
+            alert('Senha ou usuário incorreto');
           } else {
             alert(errorMessage);
           }
