@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="Principal">
     <meta name="author" content="HelRaph">
-  <!--  <link rel="icon" href="../../favicon.ico">-->
+    <!--  <link rel="icon" href="../../favicon.ico">-->
 
     <title>MisterSmart</title>
 
@@ -21,202 +21,210 @@
         };
         firebase.initializeApp(config);
     </script>
-      <!-- controller da view -->
-      <script src="controller/main.js"></script>
-      <!-- Bootstrap core CSS -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-      <link href="style/main.css" rel="stylesheet">
+    <!-- controller da view -->
+    <script src="controller/main.js"></script>
+    <!-- Bootstrap core CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style/main.css" rel="stylesheet">
 
 
-  </head>
+</head>
 
-  <body>
-    <div class="container-fluid">
-        <div class="row">
-          <ul class="nav nav-tabs col-md-11">
-                <div class="navbar-header">
-                    <a class="navbar-brand">MrSmart</a>
-                </div>
-                <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
-                <li><a data-toggle="tab" href="#produtos">Produtos</a></li>
-                <li><a data-toggle="tab" href="#promocoes">Promoções</a></li>
-                <li><a data-toggle="tab" href="#servicos">Serviços</a></li>
-          </ul>
-          <div class="nav navbar-brand col-md-1">
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <ul class="nav nav-tabs col-md-11">
+            <div class="navbar-header">
+                <a class="navbar-brand">MrSmart</a>
+            </div>
+            <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
+            <li><a data-toggle="tab" href="#produtos">Produtos</a></li>
+            <li><a data-toggle="tab" href="#promocoes">Promoções</a></li>
+            <li><a data-toggle="tab" href="#servicos">Serviços</a></li>
+        </ul>
+        <div class="nav navbar-brand col-md-1">
             <button onclick="signout()" class="btn btn-danger"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sair</button>
-          </div>
         </div>
-        <div class="row">
-          <div class="col-md-3">
+    </div>
+    <div class="row">
+        <div class="col-md-3">
             <br>
-          </div>
-          <div class="tab-content col-md-9">
+        </div>
+        <div class="tab-content col-md-9">
 
-              <div id="clientes" class="tab-pane fade in active">
-              <h3>Clientes</h3>
-              <div class="row list-group nav-tabs">
-                  <div class="col-md-7">
-                      <script>
-                          laco("cliente");
-                      </script>
-                  </div>
-                  <div class="col-md-5">
-                      <form id="formcliente">
-                          <div class="form-group">
-                              <label for="nome">Nome:</label>&nbsp;
-                              <input type="text" id="nome" />
-                          </div>
-                          <div  class="form-group" id="sexo">
-                              <label for="sexo">Sexo:</label><br>
-                              <input type="radio" name="sexo" value="feminino"/>Feminino &nbsp;
-                              <input type="radio" name="sexo" value="masculino"/>Masculino &nbsp;
-                              <input type="radio" name="sexo" value="outro"/>Outro
-                          </div>
-                          <div  class="form-group">
-                              <label for="email">E-mail:</label>&nbsp;
-                              <input type="email" id="email" />
-                          </div>
-                          <div  class="form-group">
-                              <label for="senha">Senha:</label>&nbsp;
-                              <input type="password" id="senha" />
-                          </div>
-                          <div  class="form-group">
-                              <label for="pontos">Pontos:</label>
-                              <input type="number" id="pontos" />
-                          </div>
-                          <div class="button">
-                              <button class="col-md-7 btn btn-success btn-sm" id="botao-salva-user" type="reset" onclick="criaUser()">Salvar</button>
-                          </div>
-                      </form>
-                      <br><br><br>
-                      <br>
-                      <div class="row">
-                          <button class="btn btn-success btn-lg" type="button">Adicionar</button>
-                          <button class="btn btn-primary btn-lg" type="button">Editar</button>
-                          <button class="btn btn-danger btn-lg" type="button">Deletar</button>
-                      </div><br>
-                  </div>
-              </div>
+            <div id="clientes" class="tab-pane fade in active">
+                <h3>Clientes</h3>
+                <div class="row list-group nav-tabs">
+                    <div class="col-md-7" id="clientelist">
+                        <script>
+                            laco("cliente");
+                        </script>
+                    </div>
+                    <div class="col-md-5">
+                        <div id='form_cli' style="visibility:hidden;">
+                            <form id="formcliente">
+                                <div class="form-group">
+                                    <label for="nome">Nome:</label>&nbsp;
+                                    <input type="text" id="nome" />
+                                </div>
+                                <div  class="form-group" id="sexo">
+                                    <label for="sexo">Sexo:</label><br>
+                                    <input type="radio" name="sexo" value="feminino"/>Feminino &nbsp;
+                                    <input type="radio" name="sexo" value="masculino"/>Masculino &nbsp;
+                                    <input type="radio" name="sexo" value="outro"/>Outro
+                                </div>
+                                <div  class="form-group">
+                                    <label for="email">E-mail:</label>&nbsp;
+                                    <input type="email" id="email" />
+                                </div>
+                                <div  class="form-group">
+                                    <label for="senha">Senha:</label>&nbsp;
+                                    <input type="password" id="senha" />
+                                </div>
+                                <div  class="form-group">
+                                    <label for="pontos">Pontos:</label>
+                                    <input type="number" id="pontos" />
+                                </div>
+                                <div class="button">
+                                    <button class="col-md-7 btn btn-success btn-sm" id="botao-salva-user" type="reset" onclick="criaUser()">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <br><br><br>
+                        <br>
+                        <div class="row">
+                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('form_cli')">Adicionar</button>
+                            <button class="btn btn-primary btn-lg" type="button" >Editar</button>
+                            <button class="btn btn-danger btn-lg" type="button">Deletar</button>
+                        </div><br>
+                    </div>
+                </div>
             </div>
 
-              <div id="produtos" class="tab-pane fade">
-              <h3>Produtos</h3>
-                  <div class="row list-group nav-tabs">
-                      <div class="col-md-6">
-                          <script>
-                              laco("produto");
-                          </script>
-                      </div>
+            <div id="produtos" class="tab-pane fade">
+                <h3>Produtos</h3>
+                <div class="row list-group nav-tabs">
+                    <div class="col-md-6" id="produtolist">
+                        <script>
+                            laco("produto");
+                        </script>
+                    </div>
 
-                      <div class="col-md-6">
-                          <form id="formproduto">
-                              <div class="form-group">
-                                  <label for="nomeProd">Nome:</label>
-                                  <input type="text" id="nomeProd" />
-                              </div>
-                              <div  class="form-group">
-                                  <label for="imgProd">Imagem do Produto:</label>
-                                  <input type="file" id="imgProd" />
-                              </div>
-                              <div  class="form-group">
-                                  <label for="descProd">Descrição:</label>
-                                  <input type="text" id="descProd" />
-                              </div>
-                              <div  class="form-group">
-                                  <label for="pontosProd">Pontos:</label>
-                                  <input type="number" id="pontosProd" />
-                              </div>
-                              <div class="button">
-                                  <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prod" type="reset" onclick="criaProduto()">Salvar</button>
-                              </div>
-                          </form>
-                          <br><br><br>
-                          <br>
-                          <div class="row">
-                              <button class="btn btn-success btn-lg" type="button">Adicionar</button>
-                              <button class="btn btn-primary btn-lg" type="button">Editar</button>
-                              <button class="btn btn-danger btn-lg" type="button">Deletar</button>
-                          </div><br>
-                      </div>
-                  </div>
+                    <div class="col-md-6">
+                        <div id='form_prod' style="visibility:hidden;">
+                            <form id="formproduto">
+                                <div class="form-group">
+                                    <label for="nomeProd">Nome:</label>
+                                    <input type="text" id="nomeProd" />
+                                </div>
+                                <div  class="form-group">
+                                    <label for="imgProd">Imagem do Produto:</label>
+                                    <input type="file" id="imgProd" />
+                                </div>
+                                <div  class="form-group">
+                                    <label for="descProd">Descrição:</label>
+                                    <input type="text" id="descProd" />
+                                </div>
+                                <div  class="form-group">
+                                    <label for="pontosProd">Pontos:</label>
+                                    <input type="number" id="pontosProd" />
+                                </div>
+                                <div class="button">
+                                    <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prod" type="reset" onclick="criaProduto()">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <br><br><br>
+                        <br>
+                        <div class="row">
+                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('form_prod')">Adicionar</button>
+                            <button class="btn btn-primary btn-lg" type="button">Editar</button>
+                            <button class="btn btn-danger btn-lg" type="button">Deletar</button>
+                        </div><br>
+                    </div>
+                </div>
             </div>
 
             <div id="promocoes" class="tab-pane fade">
-            <h3>Promoções</h3>
-            <div class="col-md-6">
-              <script>
-                laco("promoções");
-              </script>
-            </div>
-                <div class="col-md-6">
-                      <form id="formpromocao">
-                          <div  class="form-group">
-                              <label for="imgProm">Banner da Promoção:</label>
-                              <input type="file" id="imgProm" />
-                          </div>
-                          <div  class="form-group">
-                              <label for="descProm">Descrição:</label>
-                              <input type="text" id="descProm" />
-                          </div>
-                          <div class="button">
-                              <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prom" type="reset" onclick="criaPromocao()">Salvar</button>
-                          </div>
-                      </form>
-                      <br><br><br>
-                      <br>
-                      <div class="row">
-                          <button class="btn btn-success btn-lg" type="button">Adicionar</button>
-                          <button class="btn btn-primary btn-lg" type="button">Editar</button>
-                          <button class="btn btn-danger btn-lg" type="button">Deletar</button>
-                      </div>
+                <h3>Promoções</h3>
+                <div class="col-md-6" id="promocaolist">
+                    <script>
+                        laco("promoções");
+                    </script>
                 </div>
-            </div>
-            <div id="servicos" class="tab-pane fade">
-              <h3>Serviços</h3>
-              <div class="col-md-6">
-                  <script>
-                    laco("serviços");
-                  </script>
-              </div>
                 <div class="col-md-6">
-                    <form id="formservico">
-                        <div class="form-group">
-                            <label for="nomeServ">Nome:</label>
-                            <input type="text" id="nomeServ" />
-                        </div>
-                        <div  class="form-group">
-                            <label for="imgServ">Imagem da Promoção:</label>
-                            <input type="file" id="imgServ" />
-                        </div>
-                        <div  class="form-group">
-                            <label for="descServ">Descrição:</label>
-                            <input type="text" id="descServ" />
-                        </div>
-                        <div  class="form-group">
-                            <label for="pontosServ">Pontos:</label>
-                            <input type="number" id="pontosServ" />
-                        </div>
-                        <div class="button">
-                            <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>
-                        </div>
-                    </form>
-                    <br><br>
+                    <div id='form_prom' style="visibility:hidden;">
+                        <form id="formpromocao">
+                            <div  class="form-group">
+                                <label for="imgProm">Banner da Promoção:</label>
+                                <input type="file" id="imgProm" />
+                            </div>
+                            <div  class="form-group">
+                                <label for="descProm">Descrição:</label>
+                                <input type="text" id="descProm" />
+                            </div>
+                            <div class="button">
+                                <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prom" type="reset" onclick="criaPromocao()">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <br><br><br>
+                    <br>
                     <div class="row">
-                        <button class="btn btn-success btn-lg" type="button">Adicionar</button>
+                        <button class="btn btn-success btn-lg" type="button" onclick="showForm('form_prom')">Adicionar</button>
                         <button class="btn btn-primary btn-lg" type="button">Editar</button>
                         <button class="btn btn-danger btn-lg" type="button">Deletar</button>
                     </div>
                 </div>
-             </div>
             </div>
-          </div>
+            <div id="servicos" class="tab-pane fade">
+                <h3>Serviços</h3>
+                <div class="col-md-6" id="servicolist">
+                    <script>
+                        laco("serviços");
+                    </script>
+                </div>
+                <div class="col-md-6">
+                    <div id='form_serv' style="visibility:hidden;">
+                        <form id="formservico">
+                            <div class="form-group">
+                                <label for="nomeServ">Nome:</label>
+                                <input type="text" id="nomeServ" />
+                            </div>
+                            <div  class="form-group">
+                                <label for="imgServ">Imagem da Promoção:</label>
+                                <input type="file" id="imgServ" />
+                            </div>
+                            <div  class="form-group">
+                                <label for="descServ">Descrição:</label>
+                                <input type="text" id="descServ" />
+                            </div>
+                            <div  class="form-group">
+                                <label for="pontosServ">Pontos:</label>
+                                <input type="number" id="pontosServ" />
+                            </div>
+                            <div class="button">
+                                <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <button class="btn btn-success btn-lg" type="button" onclick="showForm('form_serv')">Adicionar</button>
+                        <button class="btn btn-primary btn-lg" type="button">Editar</button>
+                        <button class="btn btn-danger btn-lg" type="button">Deletar</button>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
 
-      <!-- rodape -->
-      <footer class="row" align="center">
-       <br> <p>Mr Smart &reg;</p>
-     </footer>
-  </body>
+<!-- rodape -->
+<footer class="row" align="center">
+    <br> <p>Mr Smart &reg;</p>
+</footer>
+</body>
 </html>

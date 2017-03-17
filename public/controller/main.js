@@ -1,3 +1,5 @@
+
+
 // funcoes importantes para o firebase
 window.onload = function() {
     firebase.auth().onAuthStateChanged(function(user) {
@@ -11,12 +13,10 @@ window.onload = function() {
 
 function signout() {
     firebase.auth().signOut();
-    console.log("deslogado");
 }
 
 // usuario
 function criaUser() {
-    console.log("entrou :)");
     usuario = {
         email: formcliente.email.value,
         nome: formcliente.nome.value,
@@ -40,7 +40,6 @@ function addUser(usuario) {
 
 // produto
 function criaProduto() {
-    console.log("entrou na função criaProduto");
     produto = {
         nome: formproduto.nomeProd.value,
         image: formproduto.imgProd.value,
@@ -51,7 +50,6 @@ function criaProduto() {
 }
 
 function addProduto(produto) {
-    console.log("entrou na função addProduto");
     // Get a key for a new Post.
     newProdKey = firebase.database().ref().child('produto').push().key;
 
@@ -65,7 +63,6 @@ function addProduto(produto) {
 
 //promocao
 function criaPromocao() {
-    console.log("entrou na função criaPromocao");
     promocao = {
         image: formpromocao.imgProm.value,
         descricao: formpromocao.descProm.value
@@ -74,7 +71,6 @@ function criaPromocao() {
 }
 
 function addPromocao(promocao) {
-    console.log("entrou na função addPromocao");
     // Get a key for a new Post.
     newPromKey = firebase.database().ref().child('promocao').push().key;
 
@@ -88,7 +84,6 @@ function addPromocao(promocao) {
 
 // servico
 function criaServico() {
-    console.log("entrou na função criaServico");
     servico = {
         nome: formservico.nomeServ.value,
         image: formservico.imgServ.value,
@@ -99,7 +94,6 @@ function criaServico() {
 }
 
 function addServico(servico) {
-    console.log("entrou na função addServico");
     // Get a key for a new Post.
     newServKey = firebase.database().ref().child('servico').push().key;
 
@@ -110,106 +104,145 @@ function addServico(servico) {
     return firebase.database().ref().update(updates);
 }
 
-function clienteList() {
-    cliente.forEach(function (obj) {
-        document.write('<a href="#'+ obj.nome +'" class="list-group-item"><h4 class="list-group-item-heading">'+ obj.nome +'</h4><p class="list-group-item-text"> Pontos: '+obj.pontos+' Bairro: '+obj.bairro+'</p></a>');
-    });
-}
+// recuperacao de dados
 
-produto = [{ nome: "Celular",
-             preco: 1400,
-             pontos: "50",
-             descricao: "Celular muito bom!"
-            },
-            { nome: "Capinha",
-              preco: 30,
-              pontos: "3",
-              descricao: "Capinha muito boa!"
-            },
-            { nome: "Carregador",
-              preco: 60,
-              pontos: "6",
-              descricao: "Carrega bem!"
-            },
-            { nome: "Fones de ouvido",
-              preco: 100,
-              pontos: "5",
-              descricao: "Boa musica!"
-            }
-];
+function clienteList() {
+    var clientelist = document.getElementById("clientelist");
+    const refUser = firebase.database().ref().child('loja/usuario');
+
+    refUser.on('value', function(snapshot) {
+        snapshot.forEach(function (item) {
+            var obj = item.val();
+
+            var h4 = document.createElement('h4');
+            h4.appendChild(document.createTextNode(obj.nome));
+            h4.className = "list-group-item-heading";
+
+            var p = document.createElement('p');
+            p.appendChild(document.createTextNode("Pontos: "+obj.pontos));
+            p.className = "list-group-item-text";
+
+
+            var a = document.createElement('a');
+            a.appendChild(h4);
+            a.appendChild(p);
+            a.className = "list-group-item";
+            a.href = "#"+ obj.nome;
+
+            clientelist.appendChild(a);
+
+        })
+    });
+
+}
 
 function produtoList() {
-    produto.forEach(function (obj) {
-        document.write('<a href="#'+ obj.nome +'" class="list-group-item"><h4 class="list-group-item-heading">'+ obj.nome +'</h4><p class="list-group-item-text"> Preço: '+obj.preco+' Descrição: '+obj.descricao+'</p></a>');
+    const refProd = firebase.database().ref().child('loja/produto');
+    var produtolist = document.getElementById("produtolist");
+
+    refProd.on('value', function(snapshot) {
+        snapshot.forEach(function (item) {
+            var obj = item.val();
+
+            var h4 = document.createElement('h4');
+            h4.appendChild(document.createTextNode(obj.nome));
+            h4.className = "list-group-item-heading";
+
+            var p = document.createElement('p');
+            p.appendChild(document.createTextNode("Descrição: "+obj.descricao+"\n Imagem!!!: "+obj.image));
+            p.className = "list-group-item-text";
+
+            var a = document.createElement('a');
+            a.appendChild(h4);
+            a.appendChild(p);
+            a.className = "list-group-item";
+            a.href = "#"+ obj.nome;
+
+
+            produtolist.appendChild(a);
+        })
     });
 }
-
-promocao = [{ nome: "Carnaval de preços baixos",
-              descricao: "Venha para essa folia de preços baixos!",
-              valida: true
-            },
-            { nome: "Pascoa de prêmios",
-              descricao: "Você não pode perder!",
-              valida: true
-            },
-            { nome: "Arraiá das promoções",
-              descricao: "O gerente enlouqueceu!",
-              valida: true
-            },
-            { nome: "Aniversário do MisterSmart",
-              descricao: "A gente faz aniversário mas quem ganha o presente é você!",
-              valida: true
-            }
-];
 
 function promocaoList() {
-    promocao.forEach(function (obj) {
-        document.write('<a href="#'+ obj.nome +'" class="list-group-item"><h4 class="list-group-item-heading">'+ obj.nome +'</h4><p class="list-group-item-text"> Ativo: '+obj.valida+' Descrição: '+obj.descricao+'</p></a>');
+    const refProm = firebase.database().ref().child('loja/promocao');
+    var promocaolist = document.getElementById("promocaolist");
+
+    refProm.on('value', function(snapshot) {
+        snapshot.forEach(function (item) {
+            var obj = item.val();
+
+            var h4 = document.createElement('h4');
+            h4.appendChild(document.createTextNode("Imagem!!!: "+obj.image));
+            h4.className = "list-group-item-heading";
+
+            var p = document.createElement('p');
+            p.appendChild(document.createTextNode("Descrição: "+obj.descricao));
+            p.className = "list-group-item-text";
+
+            var a = document.createElement('a');
+            a.appendChild(h4);
+            a.appendChild(p);
+            a.className = "list-group-item";
+            a.href = "#"+ obj.nome;
+
+
+            promocaolist.appendChild(a);
+        })
     });
 }
 
-servico = [{ nome: "Aplicar película",
-             preco: 25,
-             pontos: "4",
-             descricao: "Durabilidade garantida!"
-            },
-            { nome: "Troca de tela",
-              preco: 300,
-              pontos: "15",
-              descricao: "Durabilidade garantida!"
-            },
-            { nome: "Formatação",
-              preco: 15,
-              pontos: "3",
-              descricao: "Limpa tudo!"
-            },
-            { nome: "Instalar Whatsapp",
-              preco: 4,
-              pontos: "1",
-              descricao: "Garantimos o funcionamento!"
-            }
-];
 
 function servicoList() {
-    servico.forEach(function (obj) {
-        document.write('<a href="#'+ obj.nome +'" class="list-group-item"><h4 class="list-group-item-heading">'+ obj.nome +'</h4><p class="list-group-item-text"> Preço: '+obj.preco+' Pontos: '+obj.pontos+' Descrição: '+obj.descricao+'</p></a>');
+    const refServ = firebase.database().ref().child('loja/servico');
+    var servicolist = document.getElementById("servicolist");
+
+    refServ.on('value', function(snapshot) {
+        snapshot.forEach(function (item) {
+            var obj = item.val();
+
+            var h4 = document.createElement('h4');
+            h4.appendChild(document.createTextNode(obj.nome));
+            h4.className = "list-group-item-heading";
+
+            var p = document.createElement('p');
+            p.appendChild(document.createTextNode("Descrição: "+obj.descricao+" Imagem!!!: "+obj.image));
+            p.className = "list-group-item-text";
+
+            var a = document.createElement('a');
+            a.appendChild(h4);
+            a.appendChild(p);
+            a.className = "list-group-item";
+            a.href = "#"+ obj.nome;
+
+
+            servicolist.appendChild(a);
+        })
     });
 }
 
 function laco(tipo) {
-    if (tipo == "cliente") {
-      clienteList();
+    if (tipo === "cliente") {
+        clienteList();
     }
-    else if (tipo == "produto") {
+    else if (tipo === "produto") {
       produtoList();
     }
 
-    else if (tipo == "promoções") {
+    else if (tipo === "promoções") {
       promocaoList();
     }
 
-    else if (tipo == "serviços") {
+    else if (tipo === "serviços") {
       servicoList();
     }
 }
 
+function showForm(id) {
+    var formElem = document.getElementById(id);
+    if (formElem.style.visibility === 'hidden') {
+        formElem.style.visibility = 'visible';
+    } else {
+        formElem.style.visibility = 'hidden';
+    }
+}
