@@ -1,6 +1,6 @@
+// funcoes importantes
+var selecionado;
 
-
-// funcoes importantes para o firebase
 window.onload = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -13,6 +13,11 @@ window.onload = function() {
 
 function signout() {
     firebase.auth().signOut();
+}
+
+function seleciona(id) {
+    selecionado = document.getElementById(id).id;
+
 }
 
 // usuario
@@ -28,15 +33,18 @@ function criaUser() {
 }
 
 function addUser(usuario) {
-    // Get a key for a new Post.
     newUserKey = firebase.database().ref().child('usuario').push().key;
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
     updates = {};
     updates['/loja/usuario/' + newUserKey] = usuario;
 
     firebase.database().ref().update(updates);
+    location.reload();
 
+}
+
+function dropUser() {
+    newUserKey = firebase.database().ref().child('/loja/usuario/'+selecionado).remove();
+    location.reload();
 }
 
 // produto
@@ -51,14 +59,12 @@ function criaProduto() {
 }
 
 function addProduto(produto) {
-    // Get a key for a new Post.
     newProdKey = firebase.database().ref().child('produto').push().key;
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
     updates = {};
     updates['loja/produto/' + newProdKey] = produto;
 
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates);
+    location.reload();
 }
 
 
@@ -72,14 +78,12 @@ function criaPromocao() {
 }
 
 function addPromocao(promocao) {
-    // Get a key for a new Post.
     newPromKey = firebase.database().ref().child('promocao').push().key;
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
     updates = {};
     updates['loja/promocao/' + newPromKey] = promocao;
 
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates);
+    location.reload();
 }
 
 
@@ -95,14 +99,12 @@ function criaServico() {
 }
 
 function addServico(servico) {
-    // Get a key for a new Post.
     newServKey = firebase.database().ref().child('servico').push().key;
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
     updates = {};
     updates['loja/servico/' + newServKey] = servico;
 
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates);
+    location.reload();
 }
 
 // recuperacao de dados
@@ -125,10 +127,13 @@ function clienteList() {
 
 
             var a = document.createElement('a');
+            a.setAttribute("onclick", "seleciona($(this).attr('id'))");
+            a.className = "list-group-item";
+            a.id = item.key;
+            a.href = "#";
+
             a.appendChild(h4);
             a.appendChild(p);
-            a.className = "list-group-item";
-            a.href = "#"+ obj.nome;
             clientelist.appendChild(a);
 
         });
