@@ -17,6 +17,7 @@ function signout() {
 
 function seleciona(id) {
     selecionado = document.getElementById(id).id;
+    console.log(selecionado);
 
 }
 
@@ -43,7 +44,8 @@ function addUser(usuario) {
 }
 
 function dropUser() {
-    newUserKey = firebase.database().ref().child('/loja/usuario/'+selecionado).remove();
+    firebase.database().ref().child('/loja/usuario/'+selecionado).remove();
+    selecionado = null;
     location.reload();
 }
 
@@ -67,6 +69,11 @@ function addProduto(produto) {
     location.reload();
 }
 
+function dropProduto() {
+    firebase.database().ref().child('/loja/produto/' + selecionado).remove();
+    selecionado = null;
+    location.reload();
+}
 
 //promocao
 function criaPromocao() {
@@ -86,6 +93,11 @@ function addPromocao(promocao) {
     location.reload();
 }
 
+function dropPromocao() {
+    firebase.database().ref().child('/loja/promocao/' + selecionado).remove();
+    selecionado = null;
+    location.reload();
+}
 
 // servico
 function criaServico() {
@@ -104,6 +116,12 @@ function addServico(servico) {
     updates['loja/servico/' + newServKey] = servico;
 
     firebase.database().ref().update(updates);
+    location.reload();
+}
+
+function dropServico() {
+    firebase.database().ref().child('/loja/servico/' + selecionado).remove();
+    selecionado = null;
     location.reload();
 }
 
@@ -134,6 +152,7 @@ function clienteList() {
 
             a.appendChild(h4);
             a.appendChild(p);
+
             clientelist.appendChild(a);
 
         });
@@ -158,11 +177,13 @@ function produtoList() {
             p.className = "list-group-item-text";
 
             var a = document.createElement('a');
+            a.setAttribute("onclick", "seleciona($(this).attr('id'))");
+            a.className = "list-group-item";
+            a.id = item.key;
+            a.href = "#";
+
             a.appendChild(h4);
             a.appendChild(p);
-            a.className = "list-group-item";
-            a.href = "#"+ obj.nome;
-
 
             produtolist.appendChild(a);
         })
@@ -186,11 +207,13 @@ function promocaoList() {
             p.className = "list-group-item-text";
 
             var a = document.createElement('a');
+            a.setAttribute("onclick", "seleciona($(this).attr('id'))");
+            a.className = "list-group-item";
+            a.id = item.key;
+            a.href = "#";
+
             a.appendChild(h4);
             a.appendChild(p);
-            a.className = "list-group-item";
-            a.href = "#"+ obj.nome;
-
 
             promocaolist.appendChild(a);
         })
@@ -215,11 +238,13 @@ function servicoList() {
             p.className = "list-group-item-text";
 
             var a = document.createElement('a');
+            a.setAttribute("onclick", "seleciona($(this).attr('id'))");
+            a.className = "list-group-item";
+            a.id = item.key;
+            a.href = "#";
+
             a.appendChild(h4);
             a.appendChild(p);
-            a.className = "list-group-item";
-            a.href = "#"+ obj.nome;
-
 
             servicolist.appendChild(a);
         })
