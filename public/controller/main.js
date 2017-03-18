@@ -36,6 +36,7 @@ function addUser(usuario) {
     updates['/loja/usuario/' + newUserKey] = usuario;
 
     firebase.database().ref().update(updates);
+
 }
 
 // produto
@@ -107,10 +108,10 @@ function addServico(servico) {
 // recuperacao de dados
 
 function clienteList() {
-    var clientelist = document.getElementById("clientelist");
     const refUser = firebase.database().ref().child('loja/usuario');
+    var clientelist = document.getElementById("clientelist");
 
-    refUser.on('value', function(snapshot) {
+    refUser.once('value').then(function(snapshot) {
         snapshot.forEach(function (item) {
             var obj = item.val();
 
@@ -128,10 +129,9 @@ function clienteList() {
             a.appendChild(p);
             a.className = "list-group-item";
             a.href = "#"+ obj.nome;
-
             clientelist.appendChild(a);
 
-        })
+        });
     });
 
 }
@@ -239,10 +239,31 @@ function laco(tipo) {
 }
 
 function showForm(id) {
-    var formElem = document.getElementById(id);
+    var compl = "form_" + id;
+    var formElem = document.getElementById(compl);
     if (formElem.style.visibility === 'hidden') {
         formElem.style.visibility = 'visible';
     } else {
         formElem.style.visibility = 'hidden';
+    }
+}
+
+function showEdit(id) {
+    var compl = "edit_" + id;
+    var formElem = document.getElementById(compl);
+    if (formElem.style.visibility === 'hidden') {
+        formElem.style.visibility = 'visible';
+    } else {
+        formElem.style.visibility = 'hidden';
+    }
+}
+
+function showQuest(id) {
+    var compl = "exc_" + id;
+    var div = document.getElementById(compl);
+    if (div.style.visibility === 'hidden') {
+        div.style.visibility = 'visible';
+    } else {
+       div.style.visibility = 'hidden';
     }
 }

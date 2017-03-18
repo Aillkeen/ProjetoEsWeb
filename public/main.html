@@ -64,40 +64,91 @@
                     </div>
                     <div class="col-md-5">
                         <div id='form_cli' style="visibility:hidden;">
+
                             <form id="formcliente">
                                 <div class="form-group">
                                     <label for="nome">Nome:</label>&nbsp;
-                                    <input type="text" id="nome" />
+                                    <input class="form-control" type="text" id="nome" placeholder="Insira o nome"/>
                                 </div>
-                                <div  class="form-group" id="sexo">
+                                <div  class="form-group" id="sexo" role="radiogroup">
                                     <label for="sexo">Sexo:</label><br>
-                                    <input type="radio" name="sexo" value="feminino"/>Feminino &nbsp;
-                                    <input type="radio" name="sexo" value="masculino"/>Masculino &nbsp;
-                                    <input type="radio" name="sexo" value="outro"/>Outro
+                                    <span class="input-group-addon">
+                                        <input type="radio" name="sexo" value="feminino"/>Feminino
+                                    </span>
+                                    <span class="input-group-addon">
+                                        <input type="radio" name="sexo" value="masculino"/>Masculino
+                                    </span>
                                 </div>
                                 <div  class="form-group">
                                     <label for="email">E-mail:</label>&nbsp;
-                                    <input type="email" id="email" />
+                                    <input class="form-control" type="email" id="email" placeholder="Insira o email"/>
                                 </div>
                                 <div  class="form-group">
                                     <label for="senha">Senha:</label>&nbsp;
-                                    <input type="password" id="senha" />
+                                    <input class="form-control" type="password" id="senha" placeholder="Insira a senha"/>
                                 </div>
                                 <div  class="form-group">
                                     <label for="pontos">Pontos:</label>
-                                    <input type="number" id="pontos" />
+                                    <input class="form-control" type="number" id="pontos" placeholder="Insira os pontos"/>
                                 </div>
                                 <div class="button">
-                                    <button class="col-md-7 btn btn-success btn-sm" id="botao-salva-user" type="reset" onclick="criaUser()">Salvar</button>
+                                    <button class="btn btn-block btn-success btn-sm" id="botao-salva-user" type="reset" onclick="criaUser()">Salvar</button>
                                 </div>
+
                             </form>
+                            <div id='edit_cli' style="visibility:hidden;">
+
+                                <form id="formcliente-edit">
+                                    <div class="form-group">
+                                        <label for="nome">Nome:</label>&nbsp;
+                                        <input class="form-control" type="text" id="nome-edit" value="Charlinho"/>
+                                    </div>
+                                    <div  class="form-group" id="sexo-edit" role="radiogroup">
+                                        <label for="sexo">Sexo:</label><br>
+                                        <span class="input-group-addon">
+                                        <input type="radio" name="sexo" value="feminino"/>Feminino
+                                    </span>
+                                        <span class="input-group-addon">
+                                        <input type="radio" name="sexo" value="masculino"/>Masculino
+                                    </span>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="email">E-mail:</label>&nbsp;
+                                        <input class="form-control" type="email" id="email-edit" value="charlinho@hotmail.com"/>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="senha">Senha:</label>&nbsp;
+                                        <input class="form-control" type="password" id="senha-edit" value="aasasaefd"/>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="pontos">Pontos:</label>
+                                        <input class="form-control" type="number" id="pontos-edit" value="2"/>
+                                    </div>
+                                    <div class="button">
+                                        <button class="btn btn-block btn-primary btn-sm" id="botao-edit-user" type="reset" onclick="criaUser()">Salvar Alterações</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            <div id='exc_cli' class="panel panel-danger" style="visibility:hidden;">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">Excluir usuário</h2>
+                                </div>
+                                <div class="panel-body panel-danger">
+                                    Deseja realmente excluir o usuário?
+                                </div>
+                                <div class="panel-footer panel-danger">
+                                    <a class="btn btn-danger btn-sm" href="#" role="button">Sim</a>
+                                    <a class="btn btn-default btn-sm" href="#" role="button">Cancelar</a>
+                                </div>
+                            </div>
+
                         </div>
-                        <br><br><br>
-                        <br>
-                        <div class="row">
-                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('form_cli')">Adicionar</button>
-                            <button class="btn btn-primary btn-lg" type="button" >Editar</button>
-                            <button class="btn btn-danger btn-lg" type="button">Deletar</button>
+                        <div class="btn-group btn-group-ls row" role="group">
+                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('cli')">Adicionar</button>
+                            <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('cli')">Editar</button>
+                            <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('cli')">Deletar</button>
                         </div><br>
                     </div>
                 </div>
@@ -117,31 +168,68 @@
                             <form id="formproduto">
                                 <div class="form-group">
                                     <label for="nomeProd">Nome:</label>
-                                    <input type="text" id="nomeProd" />
+                                    <input class="form-control" type="text" id="nomeProd" />
                                 </div>
                                 <div  class="form-group">
                                     <label for="imgProd">Imagem do Produto:</label>
-                                    <input type="file" id="imgProd" />
+                                    <input class="form-control" type="file" id="imgProd" />
                                 </div>
                                 <div  class="form-group">
                                     <label for="descProd">Descrição:</label>
-                                    <input type="text" id="descProd" />
+                                    <input class="form-control" type="text" id="descProd" />
                                 </div>
                                 <div  class="form-group">
                                     <label for="pontosProd">Pontos:</label>
-                                    <input type="number" id="pontosProd" />
+                                    <input class="form-control" type="number" id="pontosProd" />
                                 </div>
                                 <div class="button">
-                                    <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prod" type="reset" onclick="criaProduto()">Salvar</button>
+                                    <button class="btn btn-block btn-success btn-sm" id="botao-salva-prod" type="reset" onclick="criaProduto()">Salvar</button>
                                 </div>
                             </form>
+
+                            <div id='edit_prod' style="visibility:hidden;">
+
+                                <form id="formprod-edit">
+                                    <div class="form-group">
+                                        <label for="nomeProd-edit">Nome:</label>
+                                        <input class="form-control" type="text" id="nomeProd-edit" value="Rolha"/>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="imgProd-edit">Imagem do Produto:</label>
+                                        <input class="form-control" type="file" id="imgProd-edit" value="C:/img.png"/>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="descProd-edit">Descrição:</label>
+                                        <input class="form-control" type="text" id="descProd-edit" value="Muito bom"/>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="pontosProd">Pontos:</label>
+                                        <input class="form-control" type="number" id="pontosProd-edit" value="12"/>
+                                    </div>
+                                    <div class="button">
+                                        <button class="btn btn-block btn-primary btn-sm" id="botao-edit-prod" type="reset" onclick="criaProduto()">Salvar</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div id='exc_prod' class="panel panel-danger" style="visibility:hidden;">
+                                    <div class="panel-heading">
+                                        <h2 class="panel-title">Excluir produto</h2>
+                                    </div>
+                                    <div class="panel-body panel-danger">
+                                        Deseja realmente excluir o produto?
+                                    </div>
+                                    <div class="panel-footer panel-danger">
+                                        <a class="btn btn-danger btn-sm" href="#" role="button">Sim</a>
+                                        <a class="btn btn-default btn-sm" href="#" role="button">Cancelar</a>
+                                    </div>
+                             </div>
+
                         </div>
-                        <br><br><br>
-                        <br>
-                        <div class="row">
-                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('form_prod')">Adicionar</button>
-                            <button class="btn btn-primary btn-lg" type="button">Editar</button>
-                            <button class="btn btn-danger btn-lg" type="button">Deletar</button>
+                        <div class="btn-group btn-group-ls row" role="group">
+                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('prod')">Adicionar</button>
+                            <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('prod')">Editar</button>
+                            <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('prod')">Deletar</button>
                         </div><br>
                     </div>
                 </div>
@@ -159,24 +247,54 @@
                         <form id="formpromocao">
                             <div  class="form-group">
                                 <label for="imgProm">Banner da Promoção:</label>
-                                <input type="file" id="imgProm" />
+                                <input class="form-control" type="file" id="imgProm" />
                             </div>
                             <div  class="form-group">
                                 <label for="descProm">Descrição:</label>
-                                <input type="text" id="descProm" />
+                                <input class="form-control" type="text" id="descProm" />
                             </div>
                             <div class="button">
-                                <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-prom" type="reset" onclick="criaPromocao()">Salvar</button>
+                                <button class="btn btn-block btn-success btn-sm" id="botao-salva-prom" type="reset" onclick="criaPromocao()">Salvar</button>
                             </div>
                         </form>
+
+                        <div id='edit_prom' style="visibility:hidden;">
+
+                            <form id="formprom-edit">
+                                <div  class="form-group">
+                                    <label for="imgProm-edit">Banner da Promoção:</label>
+                                    <input class="form-control" type="file" id="imgProm-edit" value="Carnal de preços"/>
+                                </div>
+                                <div  class="form-group">
+                                    <label for="descProm-edit">Descrição:</label>
+                                    <input class="form-control" type="text" id="descProm-edit" value="Muin bom"/>
+                                </div>
+                                <div class="button">
+                                    <button class="btn btn-block btn-primary btn-sm" id="botao-edit-prom" type="reset" onclick="criaPromocao()">Salvar</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <div id='exc_prom' class="panel panel-danger" style="visibility:hidden;">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">Excluir promoção</h2>
+                            </div>
+                            <div class="panel-body panel-danger">
+                                Deseja realmente excluir a promoção?
+                            </div>
+                            <div class="panel-footer panel-danger">
+                                <a class="btn btn-danger btn-sm" href="#" role="button">Sim</a>
+                                <a class="btn btn-default btn-sm" href="#" role="button">Cancelar</a>
+                            </div>
+                        </div>
+
                     </div>
-                    <br><br><br>
-                    <br>
-                    <div class="row">
-                        <button class="btn btn-success btn-lg" type="button" onclick="showForm('form_prom')">Adicionar</button>
-                        <button class="btn btn-primary btn-lg" type="button">Editar</button>
-                        <button class="btn btn-danger btn-lg" type="button">Deletar</button>
-                    </div>
+                    <div class="btn-group btn-group-ls row" role="group">
+                        <button class="btn btn-success btn-lg" type="button" onclick="showForm('prom')">Adicionar</button>
+                        <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('prom')">Editar</button>
+                        <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('prom')">Deletar</button>
+                    </div><br>
                 </div>
             </div>
             <div id="servicos" class="tab-pane fade">
@@ -191,31 +309,69 @@
                         <form id="formservico">
                             <div class="form-group">
                                 <label for="nomeServ">Nome:</label>
-                                <input type="text" id="nomeServ" />
+                                <input class="form-control"  type="text" id="nomeServ" />
                             </div>
                             <div  class="form-group">
                                 <label for="imgServ">Imagem da Promoção:</label>
-                                <input type="file" id="imgServ" />
+                                <input class="form-control" type="file" id="imgServ" />
                             </div>
                             <div  class="form-group">
                                 <label for="descServ">Descrição:</label>
-                                <input type="text" id="descServ" />
+                                <input class="form-control" type="text" id="descServ" />
                             </div>
                             <div  class="form-group">
                                 <label for="pontosServ">Pontos:</label>
-                                <input type="number" id="pontosServ" />
+                                <input class="form-control" type="number" id="pontosServ" />
                             </div>
                             <div class="button">
-                                <button class="col-md-6 btn btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>
+                                <button class="btn btn-block btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>
                             </div>
                         </form>
+
+
+                        <div id='edit_serv' style="visibility:hidden;">
+                            <form id="formservico-edit">
+                                <div class="form-group">
+                                    <label for="nomeServ-edit">Nome:</label>
+                                    <input class="form-control"  type="text" id="nomeServ-edit" value="Coratar unha"/>
+                                </div>
+                                <div  class="form-group">
+                                    <label for="imgServ-edit">Imagem da Promoção:</label>
+                                    <input class="form-control" type="file" id="imgServ-edit" value="qq"/>
+                                </div>
+                                <div  class="form-group">
+                                    <label for="descServ-edit">Descrição:</label>
+                                    <input class="form-control" type="text" id="descServ-edit" value="eewewewew"/>
+                                </div>
+                                <div  class="form-group">
+                                    <label for="pontosServ-edit">Pontos:</label>
+                                    <input class="form-control" type="number" id="pontosServ-edit" value="12"/>
+                                </div>
+                                <div class="button">
+                                    <button class="btn btn-block btn-primary btn-sm" id="botao-edit-serv" type="reset" onclick="criaServico()">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id='exc_serv' class="panel panel-danger" style="visibility:hidden;">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">Excluir serviço</h2>
+                            </div>
+                            <div class="panel-body panel-danger">
+                                Deseja realmente excluir o serviço?
+                            </div>
+                            <div class="panel-footer panel-danger">
+                                <a class="btn btn-danger btn-sm" href="#" role="button">Sim</a>
+                                <a class="btn btn-default btn-sm" href="#" role="button">Cancelar</a>
+                            </div>
+                        </div>
+
                     </div>
-                    <br><br>
-                    <div class="row">
-                        <button class="btn btn-success btn-lg" type="button" onclick="showForm('form_serv')">Adicionar</button>
-                        <button class="btn btn-primary btn-lg" type="button">Editar</button>
-                        <button class="btn btn-danger btn-lg" type="button">Deletar</button>
-                    </div>
+                    <div class="btn-group btn-group-ls row" role="group">
+                        <button class="btn btn-success btn-lg" type="button" onclick="showForm('serv')">Adicionar</button>
+                        <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('serv')">Editar</button>
+                        <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('serv')">Deletar</button>
+                    </div><br>
                 </div>
             </div>
         </div>
