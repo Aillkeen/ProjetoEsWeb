@@ -17,3 +17,8 @@ a {
 .navbar-brand {
   font-weight: bold;
 }
+
+.media-object {
+    height: 64px;
+    width: 64px;
+}

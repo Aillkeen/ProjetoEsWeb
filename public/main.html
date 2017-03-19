@@ -127,7 +127,7 @@
             <div id="produtos" class="tab-pane fade">
                 <h3>Produtos</h3>
                 <div class="row list-group nav-tabs">
-                    <div class="col-md-6" id="produtolist">
+                    <div class="media col-md-6" id="produtolist">
                         <script>
                             laco("produto");
                         </script>
@@ -143,6 +143,28 @@
                                 <div  class="form-group">
                                     <label for="imgProd">Imagem do Produto:</label>
                                     <input class="form-control" type="file" id="imgProd" />
+                                    <script>
+                                        var file = document.getElementById("imgProd");
+
+                                        file.addEventListener('change', function (e) {
+                                            var produto = e.target.files[0];
+
+                                            var storageRef = firebase.storage().ref().child('produto/' + produto.name);
+                                            var task = storageRef.put(produto);
+
+                                            task.on('state_changed', function(snapshot){
+                                            }, function(error) {
+                                                alert("Não foi possível salvar a imagem");
+                                            }, function() {
+                                                storageRef.getDownloadURL().then(function(url) {
+                                                    urlProdutoSalvo = url;
+                                                }).catch(function(error) {
+                                                    alert("Não foi possível salvar a imagem");
+                                                });
+                                            });
+
+                                        });
+                                    </script>
                                 </div>
                                 <div  class="form-group">
                                     <label for="descProd">Descrição:</label>
@@ -198,6 +220,28 @@
                             <div  class="form-group">
                                 <label for="imgProm">Banner da Promoção:</label>
                                 <input class="form-control" type="file" id="imgProm" />
+                                <script>
+                                    var file = document.getElementById("imgProm");
+
+                                    file.addEventListener('change', function (e) {
+                                        var promocao = e.target.files[0];
+
+                                        var storageRef = firebase.storage().ref().child('promocao/' + promocao.name);
+                                        var task = storageRef.put(promocao);
+
+                                        task.on('state_changed', function(snapshot){
+                                        }, function(error) {
+                                            alert("Não foi possível salvar a imagem");
+                                        }, function() {
+                                            storageRef.getDownloadURL().then(function(url) {
+                                                urlPromocaoSalvo = url;
+                                            }).catch(function(error) {
+                                                alert("Não foi possível salvar a imagem");
+                                            });
+                                        });
+
+                                    });
+                                </script>
                             </div>
                             <div  class="form-group">
                                 <label for="descProm">Descrição:</label>
@@ -252,6 +296,28 @@
                             <div  class="form-group">
                                 <label for="imgServ">Imagem do Serviço:</label>
                                 <input class="form-control" type="file" id="imgServ" />
+                                <script>
+                                    var file = document.getElementById("imgServ");
+
+                                    file.addEventListener('change', function (e) {
+                                        var servico = e.target.files[0];
+
+                                        var storageRef = firebase.storage().ref().child('servico/' + servico.name);
+                                        var task = storageRef.put(servico);
+
+                                        task.on('state_changed', function(snapshot){
+                                        }, function(error) {
+                                            alert("Não foi possível salvar a imagem");
+                                        }, function() {
+                                            storageRef.getDownloadURL().then(function(url) {
+                                                urlServicoSalvo = url;
+                                            }).catch(function(error) {
+                                                alert("Não foi possível salvar a imagem");
+                                            });
+                                        });
+
+                                    });
+                                </script>
                             </div>
                             <div  class="form-group">
                                 <label for="descServ">Descrição:</label>

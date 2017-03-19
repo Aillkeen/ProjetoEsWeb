@@ -1,6 +1,12 @@
-// funcoes importantes
-var selecionado;
+// Helisson: Os comentarios servem para refatorar o codigo posteriormente, nao remover ate que isso seja feito.
 
+// armazenamento de arquivos
+
+var urlProdutoSalvo;
+var urlPromocaoSalvo;
+var urlServicoSalvo;
+
+// funcoes importantes
 window.onload = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -15,13 +21,17 @@ function signout() {
     firebase.auth().signOut();
 }
 
+var selecionado;
+
 function seleciona(id) {
     selecionado = document.getElementById(id).id;
     console.log(selecionado);
 
 }
 
-// usuario
+//Gerencia de dados
+
+    // usuario
 function criaUser() {
     var usuario = {
         email: formcliente.email.value,
@@ -66,11 +76,11 @@ function dropUser() {
     location.reload();
 }
 
-// produto
+    // produto
 function criaProduto() {
     var produto = {
         nome: formproduto.nomeProd.value,
-        image: formproduto.imgProd.value,
+        image: urlProdutoSalvo,
         descricao: formproduto.descProd.value,
         ponto: formproduto.pontosProd.value
     };
@@ -83,6 +93,7 @@ function addProduto(produto) {
     updates['loja/produto/' + newProdKey] = produto;
 
     firebase.database().ref().update(updates);
+    urlProdutoSalvo = null;
     location.reload();
 }
 
@@ -110,10 +121,10 @@ function dropProduto() {
     location.reload();
 }
 
-//promocao
+    //promocao
 function criaPromocao() {
     var promocao = {
-        image: formpromocao.imgProm.value,
+        image: urlPromocaoSalvo,
         descricao: formpromocao.descProm.value
     };
     addPromocao(promocao);
@@ -125,6 +136,7 @@ function addPromocao(promocao) {
     updates['loja/promocao/' + newPromKey] = promocao;
 
     firebase.database().ref().update(updates);
+    urlPromocaoSalvo = null;
     location.reload();
 }
 
@@ -149,11 +161,11 @@ function dropPromocao() {
     location.reload();
 }
 
-// servico
+    // servico
 function criaServico() {
     var servico = {
         nome: formservico.nomeServ.value,
-        image: formservico.imgServ.value,
+        image: urlServicoSalvo,
         descricao: formservico.descServ.value,
         ponto: formservico.pontosServ.value
     };
@@ -166,6 +178,7 @@ function addServico(servico) {
     updates['loja/servico/' + newServKey] = servico;
 
     firebase.database().ref().update(updates);
+    urlServicoSalvo = null;
     location.reload();
 }
 
@@ -191,6 +204,8 @@ function dropServico() {
     selecionado = null;
     location.reload();
 }
+
+
 
 // recuperacao de dados
 
@@ -239,11 +254,25 @@ function produtoList() {
 
             var h4 = document.createElement('h4');
             h4.appendChild(document.createTextNode(obj.nome));
-            h4.className = "list-group-item-heading";
+            h4.className = "media-heading";
 
             var p = document.createElement('p');
-            p.appendChild(document.createTextNode("Descrição: "+obj.descricao+"\n Imagem!!!: "+obj.image));
+            p.appendChild(document.createTextNode("Descrição: "+obj.descricao));
             p.className = "list-group-item-text";
+
+            var divBody = document.createElement('div');
+            divBody.className = "media-body";
+            divBody.appendChild(h4);
+            divBody.appendChild(p);
+
+
+            var img = document.createElement('img');
+            img.setAttribute("src", obj.image);
+            img.setAttribute("class", "media-object img-rounded");
+
+            var div = document.createElement('div');
+            div.className = "media-left";
+            div.appendChild(img);
 
             var a = document.createElement('a');
             a.setAttribute("onclick", "seleciona($(this).attr('id'))");
@@ -251,8 +280,8 @@ function produtoList() {
             a.id = item.key;
             a.href = "#";
 
-            a.appendChild(h4);
-            a.appendChild(p);
+            a.appendChild(div);
+            a.appendChild(divBody);
 
             produtolist.appendChild(a);
         })
@@ -267,13 +296,21 @@ function promocaoList() {
         snapshot.forEach(function (item) {
             var obj = item.val();
 
-            var h4 = document.createElement('h4');
-            h4.appendChild(document.createTextNode("Imagem!!!: "+obj.image));
-            h4.className = "list-group-item-heading";
-
             var p = document.createElement('p');
             p.appendChild(document.createTextNode("Descrição: "+obj.descricao));
             p.className = "list-group-item-text";
+
+            var divBody = document.createElement('div');
+            divBody.className = "media-body";
+            divBody.appendChild(p);
+
+            var img = document.createElement('img');
+            img.setAttribute("src", obj.image);
+            img.setAttribute("class", "media-object img-rounded");
+
+            var div = document.createElement('div');
+            div.className = "media-left";
+            div.appendChild(img);
 
             var a = document.createElement('a');
             a.setAttribute("onclick", "seleciona($(this).attr('id'))");
@@ -281,8 +318,8 @@ function promocaoList() {
             a.id = item.key;
             a.href = "#";
 
-            a.appendChild(h4);
-            a.appendChild(p);
+            a.appendChild(div);
+            a.appendChild(divBody);
 
             promocaolist.appendChild(a);
         })
@@ -300,11 +337,24 @@ function servicoList() {
 
             var h4 = document.createElement('h4');
             h4.appendChild(document.createTextNode(obj.nome));
-            h4.className = "list-group-item-heading";
+            h4.className = "media-heading";
 
             var p = document.createElement('p');
-            p.appendChild(document.createTextNode("Descrição: "+obj.descricao+" Imagem!!!: "+obj.image));
+            p.appendChild(document.createTextNode("Descrição: "+obj.descricao));
             p.className = "list-group-item-text";
+
+            var divBody = document.createElement('div');
+            divBody.className = "media-body";
+            divBody.appendChild(h4);
+            divBody.appendChild(p);
+
+            var img = document.createElement('img');
+            img.setAttribute("src", obj.image);
+            img.setAttribute("class", "media-object img-rounded");
+
+            var div = document.createElement('div');
+            div.className = "media-left";
+            div.appendChild(img);
 
             var a = document.createElement('a');
             a.setAttribute("onclick", "seleciona($(this).attr('id'))");
@@ -312,13 +362,16 @@ function servicoList() {
             a.id = item.key;
             a.href = "#";
 
-            a.appendChild(h4);
-            a.appendChild(p);
+            a.appendChild(div);
+            a.appendChild(divBody);
 
             servicolist.appendChild(a);
         })
     });
 }
+
+
+// Mecânica do front
 
 function laco(tipo) {
     if (tipo === "cliente") {
