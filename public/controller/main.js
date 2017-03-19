@@ -23,7 +23,7 @@ function seleciona(id) {
 
 // usuario
 function criaUser() {
-    usuario = {
+    var usuario = {
         email: formcliente.email.value,
         nome: formcliente.nome.value,
         pontos: formcliente.pontos.value,
@@ -34,8 +34,8 @@ function criaUser() {
 }
 
 function addUser(usuario) {
-    newUserKey = firebase.database().ref().child('usuario').push().key;
-    updates = {};
+    var newUserKey = firebase.database().ref().child('usuario').push().key;
+    var updates = {};
     updates['/loja/usuario/' + newUserKey] = usuario;
 
     firebase.database().ref().update(updates);
@@ -44,21 +44,20 @@ function addUser(usuario) {
 }
 
 function editUser() {
-    usuario = {
-        email: formcliente.email.value,
-        nome: formcliente.nome.value,
-        pontos: formcliente.pontos.value,
-        senha: formcliente.senha.value,
-        sexo : formcliente.sexo.value
+    var usuario = {
+        email:  formclienteedit.emailedit.value,
+        nome:   formclienteedit.nomeedit.value,
+        pontos: formclienteedit.pontosedit.value,
+        senha:  formclienteedit.senhaedit.value,
+        sexo :  formclienteedit.sexoedit.value
     };
-
-    newUserKey = firebase.database().ref().child('usuario').push().key;
-    updates = {};
-    updates['/loja/usuario/' + newUserKey] = usuario;
+    var updates = {};
+    updates['/loja/usuario/' + selecionado] = usuario;
 
     firebase.database().ref().update(updates);
-    location.reload();
 
+    selecionado = null;
+    location.reload();
 }
 
 function dropUser() {
@@ -69,7 +68,7 @@ function dropUser() {
 
 // produto
 function criaProduto() {
-    produto = {
+    var produto = {
         nome: formproduto.nomeProd.value,
         image: formproduto.imgProd.value,
         descricao: formproduto.descProd.value,
@@ -79,8 +78,8 @@ function criaProduto() {
 }
 
 function addProduto(produto) {
-    newProdKey = firebase.database().ref().child('produto').push().key;
-    updates = {};
+    var newProdKey = firebase.database().ref().child('produto').push().key;
+    var updates = {};
     updates['loja/produto/' + newProdKey] = produto;
 
     firebase.database().ref().update(updates);
@@ -88,30 +87,32 @@ function addProduto(produto) {
 }
 
 function editProduto() {
-    produto = {
-        nome: formproduto.nomeProd.value,
-        image: formproduto.imgProd.value,
-        descricao: formproduto.descProd.value,
-        ponto: formproduto.pontosProd.value
+    var produto = {
+        nome: formprodedit.nomeProdedit.value,
+        image: formprodedit.imgProdedit.value,
+        descricao: formprodedit.descProdedit.value,
+        ponto: formprodedit.pontosProdedit.value
     };
 
-    newProdKey = firebase.database().ref().child('produto').push().key;
-    updates = {};
-    updates['loja/produto/' + newProdKey] = produto;
+    var updates = {};
+    updates['loja/produto/' + selecionado] = produto;
 
     firebase.database().ref().update(updates);
+
+    selecionado = null;
     location.reload();
 }
 
 function dropProduto() {
     firebase.database().ref().child('/loja/produto/' + selecionado).remove();
+
     selecionado = null;
     location.reload();
 }
 
 //promocao
 function criaPromocao() {
-    promocao = {
+    var promocao = {
         image: formpromocao.imgProm.value,
         descricao: formpromocao.descProm.value
     };
@@ -119,8 +120,8 @@ function criaPromocao() {
 }
 
 function addPromocao(promocao) {
-    newPromKey = firebase.database().ref().child('promocao').push().key;
-    updates = {};
+    var newPromKey = firebase.database().ref().child('promocao').push().key;
+    var updates = {};
     updates['loja/promocao/' + newPromKey] = promocao;
 
     firebase.database().ref().update(updates);
@@ -128,30 +129,29 @@ function addPromocao(promocao) {
 }
 
 function editPromocao() {
-    produto = {
-        nome: formproduto.nomeProd.value,
-        image: formproduto.imgProd.value,
-        descricao: formproduto.descProd.value,
-        ponto: formproduto.pontosProd.value
+    var promocao = {
+        image: formpromedit.imgPromedit.value,
+        descricao: formpromedit.descPromedit.value
     };
-
-    newProdKey = firebase.database().ref().child('produto').push().key;
-    updates = {};
-    updates['loja/produto/' + newProdKey] = produto;
+    var updates = {};
+    updates['loja/promocao/' + selecionado] = promocao;
 
     firebase.database().ref().update(updates);
+
+    selecionado = null;
     location.reload();
 }
 
 function dropPromocao() {
     firebase.database().ref().child('/loja/promocao/' + selecionado).remove();
+
     selecionado = null;
     location.reload();
 }
 
 // servico
 function criaServico() {
-    servico = {
+    var servico = {
         nome: formservico.nomeServ.value,
         image: formservico.imgServ.value,
         descricao: formservico.descServ.value,
@@ -161,8 +161,8 @@ function criaServico() {
 }
 
 function addServico(servico) {
-    newServKey = firebase.database().ref().child('servico').push().key;
-    updates = {};
+    var newServKey = firebase.database().ref().child('servico').push().key;
+    var updates = {};
     updates['loja/servico/' + newServKey] = servico;
 
     firebase.database().ref().update(updates);
@@ -170,23 +170,24 @@ function addServico(servico) {
 }
 
 function editServico() {
-    produto = {
-        nome: formproduto.nomeProd.value,
-        image: formproduto.imgProd.value,
-        descricao: formproduto.descProd.value,
-        ponto: formproduto.pontosProd.value
+    var servico = {
+        nome: formservicoedit.nomeServedit.value,
+        image: formservicoedit.imgServedit.value,
+        descricao: formservicoedit.descServedit.value,
+        ponto: formservicoedit.pontosServedit.value
     };
 
-    newProdKey = firebase.database().ref().child('produto').push().key;
-    updates = {};
-    updates['loja/produto/' + newProdKey] = produto;
-
+    var updates = {};
+    updates['loja/servico/' + selecionado] = servico;
     firebase.database().ref().update(updates);
+
+    selecionado = null;
     location.reload();
 }
 
 function dropServico() {
     firebase.database().ref().child('/loja/servico/' + selecionado).remove();
+
     selecionado = null;
     location.reload();
 }
@@ -351,7 +352,7 @@ function imprimeFormCli() {
 
     refUser.once('value').then(function(snapshot) {
             var obj = snapshot.val();
-            document.getElementById("formcliente-edit").innerHTML = '<div class="form-group"><label for="nome-edit">Nome:</label>&nbsp;<input class="form-control" type="text" id="nome-edit" value="'+ obj.nome +'"/> </div> <div  class="form-group" id="sexo-edit" role="radiogroup"> <label for="sexo-edit">Sexo:</label><br> <span class="input-group-addon"> <input type="radio" name="sexo" value="feminino"/>Feminino </span> <span class="input-group-addon"> <input type="radio" name="sexo" value="masculino"/>Masculino </span> </div> <div  class="form-group"> <label for="email-edit">E-mail:</label>&nbsp; <input class="form-control" type="email" id="email-edit" value="'+obj.email+'"/> </div> <div  class="form-group"> <label for="senha-edit">Senha:</label>&nbsp; <input class="form-control" type="password" id="senha-edit" value="'+obj.senha+'"/> </div> <div  class="form-group"> <label for="pontos-edit">Pontos:</label> <input class="form-control" type="number" id="pontos-edit" value="'+ obj.pontos +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botao-edit-user" type="reset" onclick="editUser()">Salvar Alterações</button> </div>';
+            document.getElementById("formclienteedit").innerHTML = '<div class="form-group"><label for="nomeedit">Nome:</label>&nbsp;<input class="form-control" type="text" id="nomeedit" value="'+ obj.nome +'"/> </div> <div  class="form-group" id="sexoedit" role="radiogroup"> <label for="sexoedit">Sexo:</label><br> <span class="input-group-addon"> <input type="radio" name="sexoedit" value="feminino"/>Feminino </span> <span class="input-group-addon"> <input type="radio" name="sexoedit" value="masculino"/>Masculino </span> </div> <div  class="form-group"> <label for="emailedit">E-mail:</label>&nbsp; <input class="form-control" type="email" id="emailedit" value="'+obj.email+'"/> </div> <div  class="form-group"> <label for="senhaedit">Senha:</label>&nbsp; <input class="form-control" type="password" id="senhaedit" value="'+obj.senha+'"/> </div> <div  class="form-group"> <label for="pontosedit">Pontos:</label> <input class="form-control" type="number" id="pontosedit" value="'+ obj.pontos +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-user" type="reset" onclick="editUser()">Salvar Alterações</button> </div>';
     });
 }
 
@@ -360,7 +361,7 @@ function imprimeFormProd() {
 
     refProd.once('value').then(function(snapshot) {
         var obj = snapshot.val();
-        document.getElementById("formprod-edit").innerHTML = '<div class="form-group"> <label for="nomeProd-edit">Nome:</label> <input class="form-control" type="text" id="nomeProd-edit" value="'+ obj.nome +'"/> </div> <div  class="form-group"> <label for="imgProd-edit">Imagem do Produto:</label> <input class="form-control" type="file" id="imgProd-edit" value="'+ obj.image +'"/> </div> <div  class="form-group"> <label for="descProd-edit">Descrição:</label> <input class="form-control" type="text" id="descProd-edit" value="'+ obj.descricao +'"/> </div> <div  class="form-group"> <label for="pontosProd">Pontos:</label> <input class="form-control" type="number" id="pontosProd-edit" value="'+ obj.ponto +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botao-edit-prod" type="reset" onclick="editProduto()">Salvar</button> </div>';
+        document.getElementById("formprodedit").innerHTML = '<div class="form-group"> <label for="nomeProdedit">Nome:</label> <input class="form-control" type="text" id="nomeProdedit" value="'+ obj.nome +'"/> </div> <div  class="form-group"> <label for="imgProdedit">Imagem do Produto:</label> <input class="form-control" type="file" id="imgProdedit" value="'+ obj.image +'"/> </div> <div  class="form-group"> <label for="descProdedit">Descrição:</label> <input class="form-control" type="text" id="descProdedit" value="'+ obj.descricao +'"/> </div> <div  class="form-group"> <label for="pontosProdedit">Pontos:</label> <input class="form-control" type="number" id="pontosProdedit" value="'+ obj.ponto +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prod" type="reset" onclick="editProduto()">Salvar</button> </div>';
     });
 }
 
@@ -369,7 +370,7 @@ function imprimeFormProm() {
 
     refProm.once('value').then(function(snapshot) {
         var obj = snapshot.val();
-        document.getElementById("formprom-edit").innerHTML = '<div  class="form-group"> <label for="imgProm-edit">Banner da Promoção:</label> <input class="form-control" type="file" id="imgProm-edit" value="'+ obj.image +'"/> </div> <div  class="form-group"> <label for="descProm-edit">Descrição:</label> <input class="form-control" type="text" id="descProm-edit" value="'+ obj.descricao +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botao-edit-prom" type="reset" onclick="criaServico()">Salvar</button> </div>';
+        document.getElementById("formpromedit").innerHTML = '<div  class="form-group"> <label for="imgPromedit">Banner da Promoção:</label> <input class="form-control" type="file" id="imgPromedit" value="'+ obj.image +'"/> </div> <div  class="form-group"> <label for="descPromedit">Descrição:</label> <input class="form-control" type="text" id="descPromedit" value="'+ obj.descricao +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prom" type="reset" onclick="editPromocao()">Salvar</button> </div>';
     });
 }
 function imprimeFormServ() {
@@ -377,39 +378,54 @@ function imprimeFormServ() {
 
     refServ.once('value').then(function(snapshot) {
         var obj = snapshot.val();
-        document.getElementById("formservico-edit").innerHTML = '<div class="form-group"> <label for="nomeServ-edit">Nome:</label> <input class="form-control"  type="text" id="nomeServ-edit" value="'+obj.nome+'"/> </div> <div  class="form-group"> <label for="imgServ-edit">Imagem da Promoção:</label> <input class="form-control" type="file" id="imgServ-edit" value="'+obj.image+'"/> </div> <div  class="form-group"> <label for="descServ-edit">Descrição:</label> <input class="form-control" type="text" id="descServ-edit" value="'+obj.descricao+'"/> </div> <div  class="form-group"> <label for="pontosServ-edit">Pontos:</label> <input class="form-control" type="number" id="pontosServ-edit" value="'+obj.ponto+'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botao-edit-serv" type="reset" onclick="editServico()">Salvar</button> </div>';
+        document.getElementById("formservicoedit").innerHTML = '<div class="form-group"> <label for="nomeServedit">Nome:</label> <input class="form-control"  type="text" id="nomeServedit" value="'+obj.nome+'"/> </div> <div  class="form-group"> <label for="imgServedit">Imagem da Promoção:</label> <input class="form-control" type="file" id="imgServedit" value="'+obj.image+'"/> </div> <div  class="form-group"> <label for="descServedit">Descrição:</label> <input class="form-control" type="text" id="descServedit" value="'+obj.descricao+'"/> </div> <div  class="form-group"> <label for="pontosServedit">Pontos:</label> <input class="form-control" type="number" id="pontosServedit" value="'+obj.ponto+'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-serv" type="reset" onclick="editServico()">Salvar</button> </div>';
     });
 }
+function imprimeMensagemEditErr() {
+    alert("Selecione um elemento");
+}
 function showEdit(id) {
-    var compl = "edit_" + id;
-    var formElem = document.getElementById(compl);
+    if (selecionado) {
+        var compl = "edit_" + id;
+        var formElem = document.getElementById(compl);
 
-    if (formElem.style.visibility === 'hidden') {
-        formElem.style.visibility = 'visible';
-    } else {
-        formElem.style.visibility = 'hidden';
-    }
+        if (formElem.style.visibility === 'hidden') {
+            formElem.style.visibility = 'visible';
+        } else {
+            formElem.style.visibility = 'hidden';
+            selecionado = null;
+        }
 
-    if (id === 'cli') {
-        imprimeFormCli();
-   }
-    else if (id === 'prod') {
-        imprimeFormProd();
+        if (id === 'cli') {
+            imprimeFormCli();
+        }
+        else if (id === 'prod') {
+            imprimeFormProd();
+        }
+        else if (id === 'prom') {
+            imprimeFormProm();
+        }
+        else if (id === 'serv') {
+            imprimeFormServ();
+        }
     }
-    else if (id === 'prom') {
-        imprimeFormProm();
-    }
-    else if (id === 'serv') {
-        imprimeFormServ();
+    else {
+        imprimeMensagemEditErr();
     }
 }
 
 function showQuest(id) {
-    var compl = "exc_" + id;
-    var div = document.getElementById(compl);
-    if (div.style.visibility === 'hidden') {
-        div.style.visibility = 'visible';
-    } else {
-       div.style.visibility = 'hidden';
+    if (selecionado) {
+        var compl = "exc_" + id;
+        var div = document.getElementById(compl);
+        if (div.style.visibility === 'hidden') {
+            div.style.visibility = 'visible';
+        } else {
+            div.style.visibility = 'hidden';
+            selecionado = null;
+        }
+    }
+    else {
+        imprimeMensagemEditErr();
     }
 }
