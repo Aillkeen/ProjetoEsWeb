@@ -12,11 +12,11 @@ var servicoRef;
 // funcoes importantes
 window.onload = function() {
     firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        console.log("logado");
-      } else {
-        location.href="index.html";
-      }
+        if (user) {
+            console.log("logado");
+        } else {
+            location.href="index.html";
+        }
     });
 };
 
@@ -33,7 +33,7 @@ function seleciona(id) {
 
 //Gerencia de dados
 
-    // Usuarios
+// Usuarios
 function criaUser() {
     var Usuarios = {
         email: formcliente.email.value,
@@ -51,6 +51,7 @@ function addUser(Usuarios) {
     updates['Usuarios/' + newUserKey] = Usuarios;
 
     firebase.database().ref().update(updates);
+    $('#form_cli').hide();
 
 }
 
@@ -68,14 +69,17 @@ function editUser() {
     firebase.database().ref().update(updates);
 
     selecionado = null;
+    $('#edit_cli').hide();
 }
 
 function dropUser() {
     firebase.database().ref().child('Usuarios/'+selecionado).remove();
-    showQuest("cli");
+    selecionado = null;
+    $('#exc_cli').hide();
+
 }
 
-    // Produtos
+// Produtos
 function criaProduto() {
     var produto = {
         nome: formproduto.nomeProd.value,
@@ -96,6 +100,7 @@ function addProduto(produto) {
 
     urlProdutoSalvo = null;
     produtoRef = null;
+    $('#form_prod').hide();
 }
 
 function editProduto() {
@@ -115,6 +120,7 @@ function editProduto() {
     selecionado = null;
     urlProdutoSalvo = null;
     produtoRef = null;
+    $('#edit_prod').hide();
 
 }
 
@@ -133,13 +139,12 @@ function dropProduto() {
         });
 
         deletaNo(refProd);
-        showQuest("prod");
     });
 }
 
 
 
-    //Promocoes
+//Promocoes
 function criaPromocao() {
     var promocao = {
         image: urlPromocaoSalvo,
@@ -158,6 +163,7 @@ function addPromocao(promocao) {
 
     promocaoRef = null;
     urlPromocaoSalvo = null;
+    $('#form_prom').hide();
 }
 
 function editPromocao() {
@@ -173,6 +179,7 @@ function editPromocao() {
 
     promocaoRef = null;
     selecionado = null;
+    $('#edit_prom').hide();
 }
 
 function dropPromocao() {
@@ -187,13 +194,12 @@ function dropPromocao() {
 
 
         deletaNo(refProm);
-        showQuest("prom");
     });
 }
 
 
 
-    // Servicos
+// Servicos
 function criaServico() {
     var servico = {
         nome: formservico.nomeServ.value,
@@ -211,8 +217,10 @@ function addServico(servico) {
     updates['Servicos/' + newServKey] = servico;
 
     firebase.database().ref().update(updates);
+
     servicoRef = null;
     urlServicoSalvo = null;
+    $('#form_serv').hide();
 }
 
 function editServico() {
@@ -230,6 +238,7 @@ function editServico() {
 
     servicoRef = null;
     selecionado = null;
+    $('#edit_serv').hide();
 }
 
 function dropServico() {
@@ -243,13 +252,18 @@ function dropServico() {
         storageRef.delete();
 
         deletaNo(refServ);
-        showQuest("serv");
     });
 
 }
 
 function deletaNo(ref) {
     ref.remove();
+    selecionado = null;
+
+    $('#exc_prod').hide();
+    $('#exc_prom').hide();
+    $('#exc_serv').hide();
+
 }
 
 // recuperacao de dados
@@ -427,34 +441,26 @@ function laco(tipo) {
         clienteList();
     }
     else if (tipo === "produto") {
-      produtoList();
+        produtoList();
     }
 
     else if (tipo === "promoções") {
-      promocaoList();
+        promocaoList();
     }
 
     else if (tipo === "serviços") {
-      servicoList();
+        servicoList();
     }
 }
 
-function showForm(id) {
-    var compl = "form_" + id;
-    var formElem = document.getElementById(compl);
-    if (formElem.style.visibility === 'hidden') {
-        formElem.style.visibility = 'visible';
-    } else {
-        formElem.style.visibility = 'hidden';
-    }
-}
+
 
 function imprimeFormCli() {
     const refUser = firebase.database().ref().child('Usuarios/'+selecionado);
 
     refUser.once('value').then(function(snapshot) {
-            var obj = snapshot.val();
-            document.getElementById("formclienteedit").innerHTML = '<div class="form-group"><label for="nomeedit">Nome:</label>&nbsp;<input class="form-control" type="text" id="nomeedit" value="'+ obj.nome +'"/> </div> <div  class="form-group" id="sexoedit" role="radiogroup"> <label for="sexoedit">Sexo:</label><br> <span class="input-group-addon"> <input type="radio" name="sexoedit" value="feminino"/>Feminino </span> <span class="input-group-addon"> <input type="radio" name="sexoedit" value="masculino"/>Masculino </span> </div> <div  class="form-group"> <label for="emailedit">E-mail:</label>&nbsp; <input class="form-control" type="email" id="emailedit" value="'+obj.email+'"/> </div> <div  class="form-group"> <label for="senhaedit">Senha:</label>&nbsp; <input class="form-control" type="password" id="senhaedit" value="'+obj.senha+'"/> </div> <div  class="form-group"> <label for="pontosedit">Pontos:</label> <input class="form-control" type="number" id="pontosedit" value="'+ obj.pontos +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-user" type="reset" onclick="editUser()">Salvar Alterações</button> </div>';
+        var obj = snapshot.val();
+        document.getElementById("formclienteedit").innerHTML = '<div class="form-group"><label for="nomeedit">Nome:</label>&nbsp;<input class="form-control" type="text" id="nomeedit" value="'+ obj.nome +'"/> </div> <div  class="form-group" id="sexoedit" role="radiogroup"> <label for="sexoedit">Sexo:</label><br> <span class="input-group-addon"> <input type="radio" name="sexoedit" value="feminino"/>Feminino </span> <span class="input-group-addon"> <input type="radio" name="sexoedit" value="masculino"/>Masculino </span> </div> <div  class="form-group"> <label for="emailedit">E-mail:</label>&nbsp; <input class="form-control" type="email" id="emailedit" value="'+obj.email+'"/> </div> <div  class="form-group"> <label for="senhaedit">Senha:</label>&nbsp; <input class="form-control" type="password" id="senhaedit" value="'+obj.senha+'"/> </div> <div  class="form-group"> <label for="pontosedit">Pontos:</label> <input class="form-control" type="number" id="pontosedit" value="'+ obj.pontos +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-user" type="reset" onclick="editUser()">Salvar Alterações</button> </div>';
     });
 }
 
@@ -463,37 +469,44 @@ function imprimeFormProd() {
 
     refProd.once('value').then(function(snapshot) {
         var obj = snapshot.val();
-        document.getElementById("formprodedit").innerHTML = '<div class="form-group"> <label for="nomeProdedit">Nome:</label> <input class="form-control" type="text" id="nomeProdedit" value="'+ obj.nome +'"/> </div> <div  class="form-group"> <label for="imgProdedit">Imagem do Produto:</label> <input class="form-control" type="file" id="imgProdedit" value="'+ obj.image +'"/>  </div> <div  class="form-group"> <label for="descProdedit">Descrição:</label> <input class="form-control" type="text" id="descProdedit" value="'+ obj.descricao +'"/> </div> <div  class="form-group"> <label for="pontosProdedit">Pontos:</label> <input class="form-control" type="number" id="pontosProdedit" value="'+ obj.ponto +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prod" type="reset" onclick="editProduto()">Salvar</button> </div>';
+        console.log("imprimindo Produto pelo inner");
+        document.getElementById("formprodedit").innerHTML = '<div  class="form-group"> <label for="imgProdedit">Imagem do Produto:</label> <input class="form-control" type="file" id="imgProdedit" value="'+ obj.image +'"/> <progress max="100" id="uploaderedit-prod"></progress> </div><div class="form-group"> <label for="nomeProdedit">Nome:</label> <input class="form-control" type="text" id="nomeProdedit" value="'+ obj.nome +'"/> </div>  <div  class="form-group"> <label for="descProdedit">Descrição:</label> <input class="form-control" type="text" id="descProdedit" value="'+ obj.descricao +'"/> </div> <div  class="form-group"> <label for="pontosProdedit">Pontos:</label> <input class="form-control" type="number" id="pontosProdedit" value="'+ obj.ponto +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prod" type="reset" onclick="editProduto()">Salvar</button> </div>';
         salvaImagemProd();
     });
 
     function salvaImagemProd() {
-        if (document.getElementById('edit_prod').style.visibility === 'visible') {
+        var file = document.getElementById("imgProdedit");
+        var uploader = document.getElementById("uploaderedit-prod");
+        var botao = document.getElementById("botaoedit-prod");
 
-            var file = document.getElementById("imgProdedit");
+        file.addEventListener('change', function (e) {
+            var produto = e.target.files[0];
+            botao.disable = true;
 
-            file.addEventListener('change', function (e) {
-                console.log("entrou no listner");
-                var produto = e.target.files[0];
-                produtoRef = 'Produtos/'+produto.name;
+            produtoRef = 'Produtos/'+produto.name;
+            var storageRef = firebase.storage().ref().child(produtoRef);
 
-                var storageRef = firebase.storage().ref().child(produtoRef);
-                var task = storageRef.put(produto);
+            var task = storageRef.put(produto);
 
-                task.on('state_changed', function(snapshot){
-                }, function(error) {
-                    alert("Não foi possível salvar a imagem");
-                }, function() {
+            task.on('state_changed',
+                function progress(snapshot){
+                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+                    uploader.value = percentage;
+                },
+                function(error) {
+                    alert("Não foi possível salvar a imagem" + error);
+
+                },
+                function() {
                     storageRef.getDownloadURL().then(function(url) {
-                        console.log("entrou no entrou no get url");
                         urlProdutoSalvo = url;
+                        botao.disable = false;
                     }).catch(function(error) {
                         alert("Não foi possível salvar a imagem");
                     });
                 });
 
-            });
-        }
+        });
     }
 }
 
@@ -501,39 +514,45 @@ function imprimeFormProm() {
     const refProm = firebase.database().ref().child('Promocoes/'+selecionado);
 
     refProm.once('value').then(function(snapshot) {
+        console.log("imprimindo Produto pelo inner");
         var obj = snapshot.val();
-        document.getElementById("formpromedit").innerHTML = '<div  class="form-group"> <label for="imgPromedit">Banner da Promoção:</label> <input class="form-control" type="file" id="imgPromedit" value="'+ obj.image +'"/> </div> <div  class="form-group"> <label for="descPromedit">Descrição:</label> <input class="form-control" type="text" id="descPromedit" value="'+ obj.descricao +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prom" type="reset" onclick="editPromocao()">Salvar</button> </div>';
+        document.getElementById("formpromedit").innerHTML = '<div  class="form-group"> <label for="imgPromedit">Banner da Promoção:</label> <input class="form-control" type="file" id="imgPromedit" value="'+ obj.image +'"/> <progress max="100" id="uploaderedit-prom"></progress> </div> <div  class="form-group"> <label for="descPromedit">Descrição:</label> <input class="form-control" type="text" id="descPromedit" value="'+ obj.descricao +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prom" type="reset" onclick="editPromocao()">Salvar</button> </div>';
         salvaImagemProm();
     });
 
     function salvaImagemProm() {
-        if (document.getElementById('edit_prom').style.visibility === 'visible') {
-            var file = document.getElementById("imgPromedit");
+        var file = document.getElementById("imgPromedit");
+        var uploader = document.getElementById("uploaderedit-prom");
+        var botao = document.getElementById("botaoedit-prom");
 
+        file.addEventListener('change', function (e) {
 
-            file.addEventListener('change', function (e) {
+            console.log("entrou no listner");
+            var promocao = e.target.files[0];
+            promocaoRef = 'Promocoes/'+promocao.name;
 
+            var storageRef = firebase.storage().ref().child(promocaoRef);
+            var task = storageRef.put(promocao);
 
-                var promocao = e.target.files[0];
-                promocaoRef = 'Promocoes/'+promocao.name;
-
-                var storageRef = firebase.storage().ref().child(promocaoRef);
-                var task = storageRef.put(promocao);
-
-                task.on('state_changed', function(snapshot){
-                }, function(error) {
-                    alert("Não foi possível salvar a imagem");
-                }, function() {
+            task.on('state_changed',
+                function progress(snapshot){
+                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+                    uploader.value = percentage;
+                },
+                function(error) {
+                    alert("Não foi possível salvar a imagem" + error);
+                },
+                function() {
                     storageRef.getDownloadURL().then(function(url) {
-
+                        botao.disable = false;
                         urlPromocaoSalvo = url;
+                        console.log("pegou url");
                     }).catch(function(error) {
                         alert("Não foi possível salvar a imagem");
                     });
-                });
+             });
 
-            });
-        }
+        });
     }
 }
 function imprimeFormServ() {
@@ -541,38 +560,42 @@ function imprimeFormServ() {
 
     refServ.once('value').then(function(snapshot) {
         var obj = snapshot.val();
-        document.getElementById("formservicoedit").innerHTML = '<div class="form-group"> <label for="nomeServedit">Nome:</label> <input class="form-control"  type="text" id="nomeServedit" value="'+obj.nome+'"/> </div> <div  class="form-group"> <label for="imgServedit">Imagem da Promoção:</label> <input class="form-control" type="file" id="imgServedit" value="'+obj.image+'"/> </div> <div  class="form-group"> <label for="descServedit">Descrição:</label> <input class="form-control" type="text" id="descServedit" value="'+obj.descricao+'"/> </div> <div  class="form-group"> <label for="pontosServedit">Pontos:</label> <input class="form-control" type="number" id="pontosServedit" value="'+obj.ponto+'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-serv" type="reset" onclick="editServico()">Salvar</button> </div>';
+        document.getElementById("formservicoedit").innerHTML = ' <div  class="form-group"> <label for="imgServedit">Imagem da Promoção:</label> <input class="form-control" type="file" id="imgServedit" value="'+obj.image+'"/> <progress max="100" id="uploaderedit-serv"></progress></div> <div  class="form-group"> <div class="form-group"> <label for="nomeServedit">Nome:</label> <input class="form-control"  type="text" id="nomeServedit" value="'+obj.nome+'"/> </div> <label for="descServedit">Descrição:</label> <input class="form-control" type="text" id="descServedit" value="'+obj.descricao+'"/> </div> <div  class="form-group"> <label for="pontosServedit">Pontos:</label> <input class="form-control" type="number" id="pontosServedit" value="'+obj.ponto+'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-serv" type="reset" onclick="editServico()">Salvar</button> </div>';
         salvaImagemServ();
     });
 
     function salvaImagemServ() {
-        if (document.getElementById('edit_serv').style.visibility === 'visible') {
+        var file = document.getElementById("imgServedit");
+        var uploader = document.getElementById("uploaderedit-serv");
+        var botao = document.getElementById("botaoedit-serv");
 
-            var file = document.getElementById("imgServedit");
-            console.log("entrou no script");
+        file.addEventListener('change', function (e) {
+            var servico = e.target.files[0];
 
-            file.addEventListener('change', function (e) {
-                var servico = e.target.files[0];
-                console.log("entrou no listner");
-                servicoRef = 'Servicos/'+servico.name;
+            servicoRef = 'Servicos/'+servico.name;
 
-                var storageRef = firebase.storage().ref().child(servicoRef);
-                var task = storageRef.put(servico);
+            var storageRef = firebase.storage().ref().child(servicoRef);
+            var task = storageRef.put(servico);
 
-                task.on('state_changed', function(snapshot){
-                }, function(error) {
-                    alert("Não foi possível salvar a imagem");
-                }, function() {
+            task.on('state_changed',
+                function progress(snapshot){
+                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+                    uploader.value = percentage;
+                },
+                function(error) {
+                    alert("Não foi possível salvar a imagem" + error);
+
+                },
+                function() {
                     storageRef.getDownloadURL().then(function(url) {
-                        console.log("entrou no entrou no get url");
                         urlServicoSalvo = url;
+                        botao.disable = false;
                     }).catch(function(error) {
                         alert("Não foi possível salvar a imagem");
                     });
                 });
 
-            });
-        }
+        });
     }
 }
 function imprimeMensagemEditErr() {
@@ -580,16 +603,6 @@ function imprimeMensagemEditErr() {
 }
 function showEdit(id) {
     if (selecionado) {
-        var compl = "edit_" + id;
-        var formElem = document.getElementById(compl);
-
-        if (formElem.style.visibility === 'hidden') {
-            formElem.style.visibility = 'visible';
-        } else {
-            formElem.style.visibility = 'hidden';
-            selecionado = null;
-        }
-
         if (id === 'cli') {
             imprimeFormCli();
         }
@@ -597,6 +610,7 @@ function showEdit(id) {
             imprimeFormProd();
         }
         else if (id === 'prom') {
+            console.log("acessa showEdit");
             imprimeFormProm();
         }
         else if (id === 'serv') {
@@ -609,17 +623,148 @@ function showEdit(id) {
 }
 
 function showQuest(id) {
-    if (selecionado) {
-        var compl = "exc_" + id;
-        var div = document.getElementById(compl);
-        if (div.style.visibility === 'hidden') {
-            div.style.visibility = 'visible';
-        } else {
-            div.style.visibility = 'hidden';
-            selecionado = null;
-        }
-    }
-    else {
+    if (!selecionado) {
         imprimeMensagemEditErr();
     }
+
 }
+
+
+$(document).ready(function(){
+    $('#menu').click(function(){
+        $('#pai').children('div').hide();
+        $('#pai-2').children('div').hide();
+        $('#pai-3').children('div').hide();
+        $('#pai-4').children('div').hide();
+    });
+
+    //tela cliente
+    $('#pai').children('div').hide();
+
+    $('#btn-add').click(function(){
+        console.log('adicionar');
+        $('#pai').children('div').hide();
+        $('#form_cli').show();
+    });
+    $('#btn-edit').click(function(){
+        console.log('editar');
+        $('#pai').children('div').hide();
+        $('#edit_cli').show();
+    });
+    $('#btn-delet').click(function(){
+        console.log('delet');
+        $('#pai').children('div').hide();
+        if(selecionado){
+            $('#exc_cli').show();
+        }
+    });
+    $('#btn1-cancelar').click(function(){
+        console.log('cancelar');
+        $('#pai').children('div').hide();
+        $('#exc_cli').hide();
+    });
+
+    $('#btn1-remove').click(function(){
+        console.log('cancelar');
+        $('#pai').children('div').hide();
+        $('#exc_cli').hide();
+    });
+
+
+    // tela produto
+    $('#pai-2').children('div').hide();
+
+    $('#btn1-prod').click(function(){
+        console.log('adicionar');
+        $('#pai-2').children('div').hide();
+        $('#form_prod').show();
+    });
+    $('#btn2-prod').click(function(){
+        console.log('editar');
+        $('#pai-2').children('div').hide();
+        $('#edit_prod').show();
+    });
+    $('#btn3-prod').click(function(){
+        console.log('delet');
+        $('#pai-2').children('div').hide();
+        if(selecionado){
+            $('#exc_prod').show();
+        }
+    });
+    $('#btn2-cancelar').click(function(){
+        console.log('cancelar');
+        $('#pai-2').children('div').hide();
+        $('#exc_prod').hide();
+    });
+
+    $('#btn2-remove').click(function(){
+        console.log('cancelar');
+        $('#pai').children('div').hide();
+        $('#exc_cli').hide();
+    });
+
+    //tela promocao
+    $('#pai-3').children('div').hide();
+
+    $('#btn1-prom').click(function(){
+        console.log('adicionar');
+        $('#pai-3').children('div').hide();
+        $('#form_prom').show();
+    });
+    $('#btn2-prom').click(function(){
+        console.log('editar');
+        $('#pai-3').children('div').hide();
+        $('#edit_prom').show();
+    });
+    $('#btn3-prom').click(function(){
+        console.log('delet');
+        $('#pai-3').children('div').hide();
+        if(selecionado){
+            $('#exc_prom').show();
+        }
+    });
+    $('#btn3-cancelar').click(function(){
+        console.log('cancelar');
+        $('#pai-3').children('div').hide();
+        $('#exc_prom').hide();
+    });
+    $('#btn3-remove').click(function(){
+        console.log('cancelar');
+        $('#pai').children('div').hide();
+        $('#exc_cli').hide();
+    });
+
+    //tela servico
+
+    $('#pai-4').children('div').hide();
+
+    $('#btn1-serv').click(function(){
+        console.log('adicionar');
+        $('#pai-4').children('div').hide();
+        $('#form_serv').show();
+    });
+    $('#btn2-serv').click(function(){
+        console.log('editar');
+        $('#pai-4').children('div').hide();
+        $('#edit_serv').show();
+    });
+    $('#btn3-serv').click(function(){
+        console.log('delet');
+        $('#pai-4').children('div').hide();
+        if(selecionado){
+            $('#exc_serv').show();
+        }
+    });
+    $('#btn4-cancelar').click(function(){
+        console.log('cancelar');
+        $('#pai-4').children('div').hide();
+        $('#exc_serv').hide();
+    });
+    $('#btn4-remove').click(function(){
+        console.log('cancelar');
+        $('#pai').children('div').hide();
+        $('#exc_cli').hide();
+    });
+
+
+});

@@ -10,6 +10,8 @@
     <title>MisterSmart</title>
     <link rel="shortcut icon" href="img/logo-icon.png" />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
     <script>
         // Initialize Firebase
@@ -25,10 +27,9 @@
     <!-- controller da view -->
     <script src="controller/main.js"></script>
     <!-- Bootstrap core CSS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
     <link href="style/main.css" rel="stylesheet">
 
 </head>
@@ -36,7 +37,7 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <ul class="nav nav-tabs col-md-11">
+        <ul class="nav nav-tabs col-md-11" id="menu">
             <div class="navbar-header">
                 <a class="navbar-brand">MrSmart</a>
             </div>
@@ -64,45 +65,46 @@
                         </script>
                     </div>
                     <div class="col-md-6">
-                        <div id='form_cli' style="visibility:hidden;">
+                        <div id='pai'>
+                            <div id='form_cli'>
 
-                            <form id="formcliente">
-                                <div class="form-group">
-                                    <label for="nome">Nome:</label>&nbsp;
-                                    <input class="form-control" type="text" id="nome" placeholder="Insira o nome"/>
-                                </div>
-                                <div  class="form-group" id="sexo" role="radiogroup">
-                                    <label for="sexo">Sexo:</label><br>
-                                    <span class="input-group-addon">
+                                <form id="formcliente">
+                                    <div class="form-group">
+                                        <label for="nome">Nome:</label>&nbsp;
+                                        <input class="form-control" type="text" id="nome" placeholder="Insira o nome"/>
+                                    </div>
+                                    <div  class="form-group" id="sexo" role="radiogroup">
+                                        <label for="sexo">Sexo:</label><br>
+                                        <span class="input-group-addon">
                                         <input type="radio" name="sexo" value="feminino"/>Feminino
                                     </span>
-                                    <span class="input-group-addon">
+                                        <span class="input-group-addon">
                                         <input type="radio" name="sexo" value="masculino"/>Masculino
                                     </span>
-                                </div>
-                                <div  class="form-group">
-                                    <label for="email">E-mail:</label>&nbsp;
-                                    <input class="form-control" type="email" id="email" placeholder="Insira o email"/>
-                                </div>
-                                <div  class="form-group">
-                                    <label for="senha">Senha:</label>&nbsp;
-                                    <input class="form-control" type="password" id="senha" placeholder="Insira a senha"/>
-                                </div>
-                                <div  class="form-group">
-                                    <label for="pontos">Pontos:</label>
-                                    <input class="form-control" type="number" id="pontos" placeholder="Insira os pontos"/>
-                                </div>
-                                <div class="button">
-                                    <button class="btn btn-block btn-success btn-sm" id="botao-salva-user" type="reset" onclick="criaUser()">Salvar</button>
-                                </div>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="email">E-mail:</label>&nbsp;
+                                        <input class="form-control" type="email" id="email" placeholder="Insira o email"/>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="senha">Senha:</label>&nbsp;
+                                        <input class="form-control" type="password" id="senha" placeholder="Insira a senha"/>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="pontos">Pontos:</label>
+                                        <input class="form-control" type="number" id="pontos" placeholder="Insira os pontos"/>
+                                    </div>
+                                    <div class="button">
+                                        <button class="btn btn-block btn-success btn-sm" id="botao-salva-user" type="reset" onclick="criaUser()">Salvar</button>
+                                    </div>
 
-                            </form>
-
-                            <div id='edit_cli' style="visibility:hidden;">
+                                </form>
+                            </div>
+                            <div id='edit_cli'>
                                 <form id="formclienteedit"></form>
                             </div>
 
-                            <div id='exc_cli' class="panel panel-danger" style="visibility:hidden;">
+                            <div id='exc_cli' class="panel panel-danger">
                                 <div class="panel-heading">
                                     <h2 class="panel-title">Excluir usuário</h2>
                                 </div>
@@ -110,16 +112,16 @@
                                     Deseja realmente excluir o usuário?
                                 </div>
                                 <div class="panel-footer panel-danger">
-                                    <a class="btn btn-danger btn-sm" href="#" role="button" onclick="dropUser()">Sim</a>
-                                    <a class="btn btn-default btn-sm" href="#" onclick="showQuest('cli')" role="button">Cancelar</a>
+                                    <a id='btn1-remove' class="btn btn-danger btn-sm" href="#" role="button" onclick="dropUser()">Sim</a>
+                                    <a id='btn1-cancelar' class="btn btn-default btn-sm" href="#" onclick="showQuest('cli')" role="button">Cancelar</a>
                                 </div>
                             </div>
 
                         </div>
                         <div class="btn-group btn-group-ls row" role="group">
-                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('cli')">Adicionar</button>
-                            <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('cli')">Editar</button>
-                            <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('cli')">Deletar</button>
+                            <button id='btn-add' class="btn btn-success btn-lg" type="button">Adicionar</button>
+                            <button id= 'btn-edit' class="btn btn-primary btn-lg" type="button" onclick="showEdit('cli')">Editar</button>
+                            <button id= 'btn-delet' class="btn btn-danger btn-lg" type="button"  onclick="showQuest('cli')">Deletar</button>
                         </div><br>
                     </div>
                 </div>
@@ -135,79 +137,90 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div id='form_prod' style="visibility:hidden;">
-                            <form id="formproduto">
-                                <div class="form-group">
-                                    <label for="nomeProd">Nome:</label>
-                                    <input class="form-control" type="text" id="nomeProd" />
-                                </div>
-                                <div  class="form-group">
-                                    <label for="imgProd">Imagem do Produto:</label>
-                                    <input class="form-control" type="file" id="imgProd" />
+                        <div id='pai-2'>
+                            <div id='form_prod'>
+                                <form id="formproduto">
+                                    <div  class="form-group">
+                                        <label for="imgProd">Imagem do Produto:</label>
+                                        <input class="form-control" type="file" id="imgProd" />
+                                        <progress max="100" id="uploader-prod"></progress>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nomeProd">Nome:</label>
+                                        <input class="form-control" type="text" id="nomeProd" />
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="descProd">Descrição:</label>
+                                        <input class="form-control" type="text" id="descProd" />
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="pontosProd">Pontos:</label>
+                                        <input class="form-control" type="number" id="pontosProd" />
+                                    </div>
+                                    <div class="button">
+                                        <button class="btn btn-block btn-success btn-sm" id="botao-salva-prod" type="reset" onclick="criaProduto()">Salvar</button>
+                                    </div>
                                     <script>
                                         var file = document.getElementById("imgProd");
+                                        var uploader = document.getElementById("uploader-prod");
+                                        var botao = document.getElementById("botao-salva-prod");
 
                                         file.addEventListener('change', function (e) {
                                             var produto = e.target.files[0];
+                                            botao.disable = true;
 
                                             produtoRef = 'Produtos/'+produto.name;
                                             var storageRef = firebase.storage().ref().child(produtoRef);
 
                                             var task = storageRef.put(produto);
 
-                                            task.on('state_changed', function(snapshot){
-                                            }, function(error) {
-                                                alert("Não foi possível salvar a imagem");
-                                            }, function() {
-                                                storageRef.getDownloadURL().then(function(url) {
-                                                    urlProdutoSalvo = url;
-                                                }).catch(function(error) {
-                                                    alert("Não foi possível salvar a imagem");
+                                            task.on('state_changed',
+                                                function progress(snapshot){
+                                                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+                                                    uploader.value = percentage;
+                                                },
+                                                function(error) {
+                                                    alert("Não foi possível salvar a imagem" + error);
+
+                                                },
+                                                function() {
+                                                    storageRef.getDownloadURL().then(function(url) {
+                                                        urlProdutoSalvo = url;
+                                                        botao.disable = false;
+                                                    }).catch(function(error) {
+                                                        alert("Não foi possível salvar a imagem");
                                                 });
                                             });
 
                                         });
                                     </script>
-                                </div>
-                                <div  class="form-group">
-                                    <label for="descProd">Descrição:</label>
-                                    <input class="form-control" type="text" id="descProd" />
-                                </div>
-                                <div  class="form-group">
-                                    <label for="pontosProd">Pontos:</label>
-                                    <input class="form-control" type="number" id="pontosProd" />
-                                </div>
-                                <div class="button">
-                                    <button class="btn btn-block btn-success btn-sm" id="botao-salva-prod" type="reset" onclick="criaProduto()">Salvar</button>
-                                </div>
-                            </form>
-
-                            <div id='edit_prod' style="visibility:hidden;">
-
-                                <form id="formprodedit"></form>
-
-
+                                </form>
                             </div>
-                            <div id='exc_prod' class="panel panel-danger" style="visibility:hidden;">
-                                    <div class="panel-heading">
-                                        <h2 class="panel-title">Excluir produto</h2>
-                                    </div>
-                                    <div class="panel-body panel-danger">
-                                        Deseja realmente excluir o produto?
-                                    </div>
-                                    <div class="panel-footer panel-danger">
-                                        <a class="btn btn-danger btn-sm" href="#" role="button" onclick="dropProduto()">Sim</a>
-                                        <a class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('prod')">Cancelar</a>
-                                    </div>
-                             </div>
+                            <div id='edit_prod'>
+                                <form id="formprodedit"></form>
+                            </div>
+                            <div id='exc_prod' class="panel panel-danger">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">Excluir produto</h2>
+                                </div>
+                                <div class="panel-body panel-danger">
+                                    Deseja realmente excluir o produto?
+                                </div>
+                                <div class="panel-footer panel-danger">
+                                    <a id='btn2-remove' class="btn btn-danger btn-sm" href="#" role="button" onclick="dropProduto()">Sim</a>
+                                    <a id='btn2-cancelar' class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('prod')">Cancelar</a>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="btn-group btn-group-ls row" role="group">
-                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('prod')">Adicionar</button>
-                            <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('prod')">Editar</button>
-                            <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('prod')">Deletar</button>
-                        </div><br>
+
+                            <button id ='btn1-prod' class="btn btn-success btn-lg" type="button" >Adicionar</button>
+                            <button id ='btn2-prod' class="btn btn-primary btn-lg" type="button" onclick="showEdit('prod')">Editar</button>
+                            <button id='btn3-prod' class="btn btn-danger btn-lg" type="button"  onclick="showQuest('prod')">Deletar</button>
+                        </div><br><br><br>
                     </div>
+                    <br><br>
                 </div>
             </div>
 
@@ -220,52 +233,66 @@
                         </script>
                     </div>
                     <div class="col-md-6">
-                        <div id='form_prom' style="visibility:hidden;">
-                            <form id="formpromocao">
-                                <div  class="form-group">
-                                    <label for="imgProm">Banner da Promoção:</label>
-                                    <input class="form-control" type="file" id="imgProm" />
+                        <div id='pai-3'>
+                            <div id='form_prom'>
+                                <form id="formpromocao">
+                                    <div  class="form-group">
+                                        <label for="imgProm">Banner da Promoção:</label>
+                                        <input class="form-control" type="file" id="imgProm" />
+                                        <progress max="100" id="uploader-prom"></progress>
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="descProm">Descrição:</label>
+                                        <input class="form-control" type="text" id="descProm" />
+                                    </div>
+                                    <div class="button">
+                                        <button class="btn btn-block btn-success btn-sm" id="botao-salva-prom" type="reset" onclick="criaPromocao()">Salvar</button>
+                                    </div>
+
                                     <script>
                                         var file = document.getElementById("imgProm");
+                                        var uploader = document.getElementById("uploader-prom");
+                                        var botao = document.getElementById("botao-salva-prom");
 
                                         file.addEventListener('change', function (e) {
                                             var promocao = e.target.files[0];
+
+                                            console.log("entrou no listner")
 
                                             promocaoRef = 'Promocoes/'+promocao.name;
 
                                             var storageRef = firebase.storage().ref().child(promocaoRef);
                                             var task = storageRef.put(promocao);
 
-                                            task.on('state_changed', function(snapshot){
-                                            }, function(error) {
-                                                alert("Não foi possível salvar a imagem");
-                                            }, function() {
-                                                storageRef.getDownloadURL().then(function(url) {
-                                                    urlPromocaoSalvo = url;
-                                                }).catch(function(error) {
-                                                    alert("Não foi possível salvar a imagem");
-                                                });
-                                            });
+                                            task.on('state_changed',
+                                                function progress(snapshot){
+                                                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+                                                    uploader.value = percentage;
+                                                },
+                                                function(error) {
+                                                    alert("Não foi possível salvar a imagem" + error);
+                                                },
+                                                function() {
+                                                    storageRef.getDownloadURL().then(function(url) {
+                                                        botao.disable = false;
+                                                        urlPromocaoSalvo = url;
+                                                        console.log("pegou url");
+                                                    }).catch(function(error) {
+                                                        alert("Não foi possível salvar a imagem");
+                                                    });
+                                             });
 
                                         });
                                     </script>
-                                </div>
-                                <div  class="form-group">
-                                    <label for="descProm">Descrição:</label>
-                                    <input class="form-control" type="text" id="descProm" />
-                                </div>
-                                <div class="button">
-                                    <button class="btn btn-block btn-success btn-sm" id="botao-salva-prom" type="reset" onclick="criaPromocao()">Salvar</button>
-                                </div>
-                            </form>
-
-                            <div id='edit_prom' style="visibility:hidden;">
+                                </form>
+                            </div>
+                            <div id='edit_prom'>
 
                                 <form id="formpromedit"></form>
 
                             </div>
 
-                            <div id='exc_prom' class="panel panel-danger" style="visibility:hidden;">
+                            <div id='exc_prom' class="panel panel-danger">
                                 <div class="panel-heading">
                                     <h2 class="panel-title">Excluir promoção</h2>
                                 </div>
@@ -273,18 +300,19 @@
                                     Deseja realmente excluir a promoção?
                                 </div>
                                 <div class="panel-footer panel-danger">
-                                    <a class="btn btn-danger btn-sm" href="#" role="button" onclick="dropPromocao()">Sim</a>
-                                    <a class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('prom')">Cancelar</a>
+                                    <a id='btn3-remove' class="btn btn-danger btn-sm" href="#" role="button" onclick="dropPromocao()">Sim</a>
+                                    <a id='btn3-cancelar' class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('prom')">Cancelar</a>
                                 </div>
                             </div>
 
                         </div>
                         <div class="btn-group btn-group-ls row" role="group">
-                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('prom')">Adicionar</button>
-                            <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('prom')">Editar</button>
-                            <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('prom')">Deletar</button>
+                            <button id ='btn1-prom' class="btn btn-success btn-lg" type="button">Adicionar</button>
+                            <button id='btn2-prom' class="btn btn-primary btn-lg" type="button" onclick="showEdit('prom')">Editar</button>
+                            <button id='btn3-prom' class="btn btn-danger btn-lg" type="button"  onclick="showQuest('prom')">Deletar</button>
                         </div><br>
                     </div>
+                    <br><br>
                 </div>
             </div>
             <div id="servicos" class="tab-pane fade">
@@ -296,17 +324,34 @@
                         </script>
                     </div>
                     <div class="col-md-6">
-                        <div id='form_serv' style="visibility:hidden;">
-                            <form id="formservico">
-                                <div class="form-group">
-                                    <label for="nomeServ">Nome:</label>
-                                    <input class="form-control"  type="text" id="nomeServ" />
-                                </div>
-                                <div  class="form-group">
-                                    <label for="imgServ">Imagem do Serviço:</label>
-                                    <input class="form-control" type="file" id="imgServ" />
+                        <div id='pai-4'>
+                            <div id='form_serv'>
+                                <form id="formservico">
+                                    <div  class="form-group">
+                                        <label for="imgServ">Imagem do Serviço:</label>
+                                        <input class="form-control" type="file" id="imgServ" />
+                                        <progress max="100" id="uploader-serv"></progress>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nomeServ">Nome:</label>
+                                        <input class="form-control"  type="text" id="nomeServ" />
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="descServ">Descrição:</label>
+                                        <input class="form-control" type="text" id="descServ" />
+                                    </div>
+                                    <div  class="form-group">
+                                        <label for="pontosServ">Pontos:</label>
+                                        <input class="form-control" type="number" id="pontosServ" />
+                                    </div>
+                                    <div class="button">
+                                        <button class="btn btn-block btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>
+                                    </div>
+
                                     <script>
                                         var file = document.getElementById("imgServ");
+                                        var uploader = document.getElementById("uploader-serv");
+                                        var botao = document.getElementById("botao-salva-serv");
 
                                         file.addEventListener('change', function (e) {
                                             var servico = e.target.files[0];
@@ -316,39 +361,35 @@
                                             var storageRef = firebase.storage().ref().child(servicoRef);
                                             var task = storageRef.put(servico);
 
-                                            task.on('state_changed', function(snapshot){
-                                            }, function(error) {
-                                                alert("Não foi possível salvar a imagem");
-                                            }, function() {
-                                                storageRef.getDownloadURL().then(function(url) {
-                                                    urlServicoSalvo = url;
-                                                }).catch(function(error) {
-                                                    alert("Não foi possível salvar a imagem");
-                                                });
+                                            task.on('state_changed',
+                                                function progress(snapshot){
+                                                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+                                                    uploader.value = percentage;
+                                                },
+                                                function(error) {
+                                                    alert("Não foi possível salvar a imagem" + error);
+
+                                                },
+                                                function() {
+                                                    storageRef.getDownloadURL().then(function(url) {
+                                                        urlServicoSalvo = url;
+                                                        botao.disable = false;
+                                                    }).catch(function(error) {
+                                                        alert("Não foi possível salvar a imagem");
+                                                    });
                                             });
 
                                         });
                                     </script>
-                                </div>
-                                <div  class="form-group">
-                                    <label for="descServ">Descrição:</label>
-                                    <input class="form-control" type="text" id="descServ" />
-                                </div>
-                                <div  class="form-group">
-                                    <label for="pontosServ">Pontos:</label>
-                                    <input class="form-control" type="number" id="pontosServ" />
-                                </div>
-                                <div class="button">
-                                    <button class="btn btn-block btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>
-                                </div>
-                            </form>
 
+                                </form>
+                            </div>
 
-                            <div id='edit_serv' style="visibility:hidden;">
+                            <div id='edit_serv'>
                                 <form id="formservicoedit"></form>
                             </div>
 
-                            <div id='exc_serv' class="panel panel-danger" style="visibility:hidden;">
+                            <div id='exc_serv' class="panel panel-danger">
                                 <div class="panel-heading">
                                     <h2 class="panel-title">Excluir serviço</h2>
                                 </div>
@@ -356,26 +397,27 @@
                                     Deseja realmente excluir o serviço?
                                 </div>
                                 <div class="panel-footer panel-danger">
-                                    <a class="btn btn-danger btn-sm" href="#" role="button" onclick="dropServico()">Sim</a>
-                                    <a class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('serv')">Cancelar</a>
+                                    <a id='btn4-remove' class="btn btn-danger btn-sm" href="#" role="button" onclick="dropServico()">Sim</a>
+                                    <a id='btn4-cancelar' class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('serv')">Cancelar</a>
                                 </div>
                             </div>
 
                         </div>
                         <div class="btn-group btn-group-ls row" role="group">
-                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('serv')">Adicionar</button>
-                            <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('serv')">Editar</button>
-                            <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('serv')">Deletar</button>
+                            <button id ='btn1-serv' class="btn btn-success btn-lg" type="button">Adicionar</button>
+                            <button id ='btn2-serv' class="btn btn-primary btn-lg" type="button" onclick="showEdit('serv')">Editar</button>
+                            <button id ='btn3-serv' class="btn btn-danger btn-lg" type="button"  onclick="showQuest('serv')">Deletar</button>
                         </div><br>
                     </div>
                 </div>
             </div>
+            <br><br>
         </div>
     </div>
 </div>
 <!-- rodape -->
 <footer class="row" align="center">
-    <br> <p>Mr Smart &reg;</p>
+    <br><div class="row"><br><br> </div><p>Mr Smart &reg;</p>
 </footer>
 </body>
 </html>

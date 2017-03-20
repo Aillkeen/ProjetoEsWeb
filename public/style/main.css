@@ -18,7 +18,7 @@ a:hover {
 footer {
     color: #F8F8F8;
     text-align: center;
-    margin-top: 15%;
+    height: 50%;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
     background-color: #18232b;
