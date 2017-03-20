@@ -4,5 +4,11 @@ img {
 }
 
 .container {
-  margin-top: 10%;
+    width: 100%;
+    background-image: linear-gradient(to bottom, #f9f9f9, #e8e8e8);
+}
+
+.row {
+    margin-top: 10%;
+    margin-bottom: 3.09%;
 }

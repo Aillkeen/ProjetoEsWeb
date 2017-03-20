@@ -8,16 +8,17 @@
     <!--  <link rel="icon" href="../../favicon.ico">-->
 
     <title>MisterSmart</title>
+    <link rel="shortcut icon" href="img/logo-icon.png" />
 
     <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
     <script>
         // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyD6DYXcI26VgRbSj1SwUbAOVjlRgIGfG0o",
-            authDomain: "projetoes-e219c.firebaseapp.com",
-            databaseURL: "https://projetoes-e219c.firebaseio.com",
-            storageBucket: "projetoes-e219c.appspot.com",
-            messagingSenderId: "382532629500"
+            apiKey: "AIzaSyCNx_i0CrT8nx7vRnZoDW2GW8jPMyQ-xVA",
+            authDomain: "projetoes-eca2d.firebaseapp.com",
+            databaseURL: "https://projetoes-eca2d.firebaseio.com",
+            storageBucket: "projetoes-eca2d.appspot.com",
+            messagingSenderId: "940859090874"
         };
         firebase.initializeApp(config);
     </script>
@@ -56,13 +57,13 @@
 
             <div id="clientes" class="tab-pane fade in active" >
                 <h3>Clientes</h3>
-                <div class="row">
-                    <div class="col-md-7 list-group nav-tabs" id="clientelist">
+                <div class="row list-group nav-tabs">
+                    <div class="col-md-6" id="clientelist">
                         <script>
                             laco("cliente");
                         </script>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div id='form_cli' style="visibility:hidden;">
 
                             <form id="formcliente">
@@ -212,157 +213,161 @@
 
             <div id="promocoes" class="tab-pane fade">
                 <h3>Promoções</h3>
-                <div class="col-md-6" id="promocaolist">
-                    <script>
-                        laco("promoções");
-                    </script>
-                </div>
-                <div class="col-md-6">
-                    <div id='form_prom' style="visibility:hidden;">
-                        <form id="formpromocao">
-                            <div  class="form-group">
-                                <label for="imgProm">Banner da Promoção:</label>
-                                <input class="form-control" type="file" id="imgProm" />
-                                <script>
-                                    var file = document.getElementById("imgProm");
-
-                                    file.addEventListener('change', function (e) {
-                                        var promocao = e.target.files[0];
-
-                                        promocaoRef = 'promocao/'+promocao.name;
-
-                                        var storageRef = firebase.storage().ref().child(promocaoRef);
-                                        var task = storageRef.put(promocao);
-
-                                        task.on('state_changed', function(snapshot){
-                                        }, function(error) {
-                                            alert("Não foi possível salvar a imagem");
-                                        }, function() {
-                                            storageRef.getDownloadURL().then(function(url) {
-                                                urlPromocaoSalvo = url;
-                                            }).catch(function(error) {
-                                                alert("Não foi possível salvar a imagem");
-                                            });
-                                        });
-
-                                    });
-                                </script>
-                            </div>
-                            <div  class="form-group">
-                                <label for="descProm">Descrição:</label>
-                                <input class="form-control" type="text" id="descProm" />
-                            </div>
-                            <div class="button">
-                                <button class="btn btn-block btn-success btn-sm" id="botao-salva-prom" type="reset" onclick="criaPromocao()">Salvar</button>
-                            </div>
-                        </form>
-
-                        <div id='edit_prom' style="visibility:hidden;">
-
-                            <form id="formpromedit"></form>
-
-                        </div>
-
-                        <div id='exc_prom' class="panel panel-danger" style="visibility:hidden;">
-                            <div class="panel-heading">
-                                <h2 class="panel-title">Excluir promoção</h2>
-                            </div>
-                            <div class="panel-body panel-danger">
-                                Deseja realmente excluir a promoção?
-                            </div>
-                            <div class="panel-footer panel-danger">
-                                <a class="btn btn-danger btn-sm" href="#" role="button" onclick="dropPromocao()">Sim</a>
-                                <a class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('prom')">Cancelar</a>
-                            </div>
-                        </div>
-
+                <div class="row list-group nav-tabs">
+                    <div class="media col-md-6" id="promocaolist">
+                        <script>
+                            laco("promoções");
+                        </script>
                     </div>
-                    <div class="btn-group btn-group-ls row" role="group">
-                        <button class="btn btn-success btn-lg" type="button" onclick="showForm('prom')">Adicionar</button>
-                        <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('prom')">Editar</button>
-                        <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('prom')">Deletar</button>
-                    </div><br>
+                    <div class="col-md-6">
+                        <div id='form_prom' style="visibility:hidden;">
+                            <form id="formpromocao">
+                                <div  class="form-group">
+                                    <label for="imgProm">Banner da Promoção:</label>
+                                    <input class="form-control" type="file" id="imgProm" />
+                                    <script>
+                                        var file = document.getElementById("imgProm");
+
+                                        file.addEventListener('change', function (e) {
+                                            var promocao = e.target.files[0];
+
+                                            promocaoRef = 'promocao/'+promocao.name;
+
+                                            var storageRef = firebase.storage().ref().child(promocaoRef);
+                                            var task = storageRef.put(promocao);
+
+                                            task.on('state_changed', function(snapshot){
+                                            }, function(error) {
+                                                alert("Não foi possível salvar a imagem");
+                                            }, function() {
+                                                storageRef.getDownloadURL().then(function(url) {
+                                                    urlPromocaoSalvo = url;
+                                                }).catch(function(error) {
+                                                    alert("Não foi possível salvar a imagem");
+                                                });
+                                            });
+
+                                        });
+                                    </script>
+                                </div>
+                                <div  class="form-group">
+                                    <label for="descProm">Descrição:</label>
+                                    <input class="form-control" type="text" id="descProm" />
+                                </div>
+                                <div class="button">
+                                    <button class="btn btn-block btn-success btn-sm" id="botao-salva-prom" type="reset" onclick="criaPromocao()">Salvar</button>
+                                </div>
+                            </form>
+
+                            <div id='edit_prom' style="visibility:hidden;">
+
+                                <form id="formpromedit"></form>
+
+                            </div>
+
+                            <div id='exc_prom' class="panel panel-danger" style="visibility:hidden;">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">Excluir promoção</h2>
+                                </div>
+                                <div class="panel-body panel-danger">
+                                    Deseja realmente excluir a promoção?
+                                </div>
+                                <div class="panel-footer panel-danger">
+                                    <a class="btn btn-danger btn-sm" href="#" role="button" onclick="dropPromocao()">Sim</a>
+                                    <a class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('prom')">Cancelar</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="btn-group btn-group-ls row" role="group">
+                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('prom')">Adicionar</button>
+                            <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('prom')">Editar</button>
+                            <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('prom')">Deletar</button>
+                        </div><br>
+                    </div>
                 </div>
             </div>
             <div id="servicos" class="tab-pane fade">
                 <h3>Serviços</h3>
-                <div class="col-md-6" id="servicolist">
-                    <script>
-                        laco("serviços");
-                    </script>
-                </div>
-                <div class="col-md-6">
-                    <div id='form_serv' style="visibility:hidden;">
-                        <form id="formservico">
-                            <div class="form-group">
-                                <label for="nomeServ">Nome:</label>
-                                <input class="form-control"  type="text" id="nomeServ" />
-                            </div>
-                            <div  class="form-group">
-                                <label for="imgServ">Imagem do Serviço:</label>
-                                <input class="form-control" type="file" id="imgServ" />
-                                <script>
-                                    var file = document.getElementById("imgServ");
-
-                                    file.addEventListener('change', function (e) {
-                                        var servico = e.target.files[0];
-
-                                        servicoRef = 'servico/'+servico.name;
-
-                                        var storageRef = firebase.storage().ref().child(servicoRef);
-                                        var task = storageRef.put(servico);
-
-                                        task.on('state_changed', function(snapshot){
-                                        }, function(error) {
-                                            alert("Não foi possível salvar a imagem");
-                                        }, function() {
-                                            storageRef.getDownloadURL().then(function(url) {
-                                                urlServicoSalvo = url;
-                                            }).catch(function(error) {
-                                                alert("Não foi possível salvar a imagem");
-                                            });
-                                        });
-
-                                    });
-                                </script>
-                            </div>
-                            <div  class="form-group">
-                                <label for="descServ">Descrição:</label>
-                                <input class="form-control" type="text" id="descServ" />
-                            </div>
-                            <div  class="form-group">
-                                <label for="pontosServ">Pontos:</label>
-                                <input class="form-control" type="number" id="pontosServ" />
-                            </div>
-                            <div class="button">
-                                <button class="btn btn-block btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>
-                            </div>
-                        </form>
-
-
-                        <div id='edit_serv' style="visibility:hidden;">
-                            <form id="formservicoedit"></form>
-                        </div>
-
-                        <div id='exc_serv' class="panel panel-danger" style="visibility:hidden;">
-                            <div class="panel-heading">
-                                <h2 class="panel-title">Excluir serviço</h2>
-                            </div>
-                            <div class="panel-body panel-danger">
-                                Deseja realmente excluir o serviço?
-                            </div>
-                            <div class="panel-footer panel-danger">
-                                <a class="btn btn-danger btn-sm" href="#" role="button" onclick="dropServico()">Sim</a>
-                                <a class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('serv')">Cancelar</a>
-                            </div>
-                        </div>
-
+                <div class="row list-group nav-tabs">
+                    <div class="col-md-6" id="servicolist">
+                        <script>
+                            laco("serviços");
+                        </script>
                     </div>
-                    <div class="btn-group btn-group-ls row" role="group">
-                        <button class="btn btn-success btn-lg" type="button" onclick="showForm('serv')">Adicionar</button>
-                        <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('serv')">Editar</button>
-                        <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('serv')">Deletar</button>
-                    </div><br>
+                    <div class="col-md-6">
+                        <div id='form_serv' style="visibility:hidden;">
+                            <form id="formservico">
+                                <div class="form-group">
+                                    <label for="nomeServ">Nome:</label>
+                                    <input class="form-control"  type="text" id="nomeServ" />
+                                </div>
+                                <div  class="form-group">
+                                    <label for="imgServ">Imagem do Serviço:</label>
+                                    <input class="form-control" type="file" id="imgServ" />
+                                    <script>
+                                        var file = document.getElementById("imgServ");
+
+                                        file.addEventListener('change', function (e) {
+                                            var servico = e.target.files[0];
+
+                                            servicoRef = 'servico/'+servico.name;
+
+                                            var storageRef = firebase.storage().ref().child(servicoRef);
+                                            var task = storageRef.put(servico);
+
+                                            task.on('state_changed', function(snapshot){
+                                            }, function(error) {
+                                                alert("Não foi possível salvar a imagem");
+                                            }, function() {
+                                                storageRef.getDownloadURL().then(function(url) {
+                                                    urlServicoSalvo = url;
+                                                }).catch(function(error) {
+                                                    alert("Não foi possível salvar a imagem");
+                                                });
+                                            });
+
+                                        });
+                                    </script>
+                                </div>
+                                <div  class="form-group">
+                                    <label for="descServ">Descrição:</label>
+                                    <input class="form-control" type="text" id="descServ" />
+                                </div>
+                                <div  class="form-group">
+                                    <label for="pontosServ">Pontos:</label>
+                                    <input class="form-control" type="number" id="pontosServ" />
+                                </div>
+                                <div class="button">
+                                    <button class="btn btn-block btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>
+                                </div>
+                            </form>
+
+
+                            <div id='edit_serv' style="visibility:hidden;">
+                                <form id="formservicoedit"></form>
+                            </div>
+
+                            <div id='exc_serv' class="panel panel-danger" style="visibility:hidden;">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">Excluir serviço</h2>
+                                </div>
+                                <div class="panel-body panel-danger">
+                                    Deseja realmente excluir o serviço?
+                                </div>
+                                <div class="panel-footer panel-danger">
+                                    <a class="btn btn-danger btn-sm" href="#" role="button" onclick="dropServico()">Sim</a>
+                                    <a class="btn btn-default btn-sm" href="#" role="button" onclick="showQuest('serv')">Cancelar</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="btn-group btn-group-ls row" role="group">
+                            <button class="btn btn-success btn-lg" type="button" onclick="showForm('serv')">Adicionar</button>
+                            <button class="btn btn-primary btn-lg" type="button" onclick="showEdit('serv')">Editar</button>
+                            <button class="btn btn-danger btn-lg" type="button"  onclick="showQuest('serv')">Deletar</button>
+                        </div><br>
+                    </div>
                 </div>
             </div>
         </div>

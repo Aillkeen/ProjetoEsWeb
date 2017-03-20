@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="Login">
-    <meta name="author" content="HelRaph">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+      <meta name="description" content="Login">
+      <meta name="author" content="HelRaph">
 
-    <title>Login</title>
+      <title>Login</title>
+      <link rel="shortcut icon" href="img/logo-icon.png" />
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style/main.css" rel="stylesheet">
-    <link href="style/signin.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyD6DYXcI26VgRbSj1SwUbAOVjlRgIGfG0o",
-        authDomain: "projetoes-e219c.firebaseapp.com",
-        databaseURL: "https://projetoes-e219c.firebaseio.com",
-        storageBucket: "projetoes-e219c.appspot.com",
-        messagingSenderId: "382532629500"
-      };
-      firebase.initializeApp(config);
-    </script>
+      <!-- Bootstrap core CSS -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <link href="style/main.css" rel="stylesheet">
+      <link href="style/signin.css" rel="stylesheet">
+
+      <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+      <script>
+          // Initialize Firebase
+          var config = {
+              apiKey: "AIzaSyCNx_i0CrT8nx7vRnZoDW2GW8jPMyQ-xVA",
+              authDomain: "projetoes-eca2d.firebaseapp.com",
+              databaseURL: "https://projetoes-eca2d.firebaseio.com",
+              storageBucket: "projetoes-eca2d.appspot.com",
+              messagingSenderId: "940859090874"
+          };
+          firebase.initializeApp(config);
+      </script>
 
     <script>
     /**
@@ -88,12 +90,12 @@
         <label for="inputPassword" class="sr-only">Senha</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
         <br>
-        <button class="btn btn-lg  btn-block" id="quickstart-sign-in" type="submit" onclick="toggleSignIn()">Entrar</button>
+        <button class="btn btn-lg btn-info btn-block" id="quickstart-sign-in" type="submit" onclick="toggleSignIn()">Entrar</button>
       </form>
     </div>
-    <footer class="row"  align="center">
-     <br> <p>Mister Smart &reg;</p>
-    </footer>
   </div>
+    <footer class="row"  align="center">
+        <br> <p>Mr Smart &reg;</p>
+    </footer>
   </body>
 </html>

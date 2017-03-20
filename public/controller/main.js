@@ -48,7 +48,7 @@ function criaUser() {
 function addUser(usuario) {
     var newUserKey = firebase.database().ref().child('usuario').push().key;
     var updates = {};
-    updates['/loja/usuario/' + newUserKey] = usuario;
+    updates['usuario/' + newUserKey] = usuario;
 
     firebase.database().ref().update(updates);
 
@@ -63,7 +63,7 @@ function editUser() {
         sexo :  formclienteedit.sexoedit.value
     };
     var updates = {};
-    updates['/loja/usuario/' + selecionado] = usuario;
+    updates['usuario/' + selecionado] = usuario;
 
     firebase.database().ref().update(updates);
 
@@ -71,7 +71,7 @@ function editUser() {
 }
 
 function dropUser() {
-    firebase.database().ref().child('/loja/usuario/'+selecionado).remove();
+    firebase.database().ref().child('usuario/'+selecionado).remove();
     showQuest("cli");
 }
 
@@ -90,7 +90,7 @@ function criaProduto() {
 function addProduto(produto) {
     var newProdKey = firebase.database().ref().child('produto').push().key;
     var updates = {};
-    updates['loja/produto/' + newProdKey] = produto;
+    updates['produto/' + newProdKey] = produto;
 
     firebase.database().ref().update(updates);
     urlProdutoSalvo = null;
@@ -107,7 +107,7 @@ function editProduto() {
     };
 
     var updates = {};
-    updates['loja/produto/' + selecionado] = produto;
+    updates['produto/' + selecionado] = produto;
 
     firebase.database().ref().update(updates);
 
@@ -118,7 +118,7 @@ function editProduto() {
 }
 
 function dropProduto() {
-    const refProd = firebase.database().ref().child('loja/produto/'+selecionado);
+    const refProd = firebase.database().ref().child('produto/'+selecionado);
 
     refProd.once('value').then(function(snapshot) {
         var obj = snapshot.val();
@@ -151,7 +151,7 @@ function criaPromocao() {
 function addPromocao(promocao) {
     var newPromKey = firebase.database().ref().child('promocao').push().key;
     var updates = {};
-    updates['loja/promocao/' + newPromKey] = promocao;
+    updates['promocao/' + newPromKey] = promocao;
 
     firebase.database().ref().update(updates);
 
@@ -166,7 +166,7 @@ function editPromocao() {
         descricao: formpromedit.descPromedit.value
     };
     var updates = {};
-    updates['loja/promocao/' + selecionado] = promocao;
+    updates['promocao/' + selecionado] = promocao;
 
     firebase.database().ref().update(updates);
 
@@ -175,7 +175,7 @@ function editPromocao() {
 }
 
 function dropPromocao() {
-    const refProm = firebase.database().ref().child('/loja/promocao/' + selecionado);
+    const refProm = firebase.database().ref().child('promocao/' + selecionado);
 
     refProm.once('value').then(function(snapshot) {
         var obj = snapshot.val();
@@ -207,7 +207,7 @@ function criaServico() {
 function addServico(servico) {
     var newServKey = firebase.database().ref().child('servico').push().key;
     var updates = {};
-    updates['loja/servico/' + newServKey] = servico;
+    updates['servico/' + newServKey] = servico;
 
     firebase.database().ref().update(updates);
     servicoRef = null;
@@ -224,7 +224,7 @@ function editServico() {
     };
 
     var updates = {};
-    updates['loja/servico/' + selecionado] = servico;
+    updates['servico/' + selecionado] = servico;
     firebase.database().ref().update(updates);
 
     servicoRef = null;
@@ -232,7 +232,7 @@ function editServico() {
 }
 
 function dropServico() {
-    const refServ = firebase.database().ref().child('/loja/servico/' + selecionado);
+    const refServ = firebase.database().ref().child('servico/' + selecionado);
 
     refServ.once('value').then(function(snapshot) {
         var obj = snapshot.val();
@@ -254,7 +254,7 @@ function deletaNo(ref) {
 // recuperacao de dados
 
 function clienteList() {
-    const refUser = firebase.database().ref().child('loja/usuario');
+    const refUser = firebase.database().ref().child('usuario');
     var clientelist = document.getElementById("clientelist");
 
     refUser.on('value', function(snapshot) {
@@ -290,7 +290,7 @@ function clienteList() {
 }
 
 function produtoList() {
-    const refProd = firebase.database().ref().child('loja/produto');
+    const refProd = firebase.database().ref().child('produto');
     var produtolist = document.getElementById("produtolist");
 
     refProd.on('value', function(snapshot) {
@@ -335,7 +335,7 @@ function produtoList() {
 }
 
 function promocaoList() {
-    const refProm = firebase.database().ref().child('loja/promocao');
+    const refProm = firebase.database().ref().child('promocao');
     var promocaolist = document.getElementById("promocaolist");
 
     refProm.on('value', function(snapshot) {
@@ -375,7 +375,7 @@ function promocaoList() {
 
 
 function servicoList() {
-    const refServ = firebase.database().ref().child('loja/servico');
+    const refServ = firebase.database().ref().child('servico');
     var servicolist = document.getElementById("servicolist");
 
     refServ.on('value', function(snapshot) {
@@ -449,7 +449,7 @@ function showForm(id) {
 }
 
 function imprimeFormCli() {
-    const refUser = firebase.database().ref().child('loja/usuario/'+selecionado);
+    const refUser = firebase.database().ref().child('usuario/'+selecionado);
 
     refUser.once('value').then(function(snapshot) {
             var obj = snapshot.val();
@@ -458,7 +458,7 @@ function imprimeFormCli() {
 }
 
 function imprimeFormProd() {
-    const refProd = firebase.database().ref().child('loja/produto/'+selecionado);
+    const refProd = firebase.database().ref().child('produto/'+selecionado);
 
     refProd.once('value').then(function(snapshot) {
         var obj = snapshot.val();
@@ -497,7 +497,7 @@ function imprimeFormProd() {
 }
 
 function imprimeFormProm() {
-    const refProm = firebase.database().ref().child('loja/promocao/'+selecionado);
+    const refProm = firebase.database().ref().child('promocao/'+selecionado);
 
     refProm.once('value').then(function(snapshot) {
         var obj = snapshot.val();
@@ -536,7 +536,7 @@ function imprimeFormProm() {
     }
 }
 function imprimeFormServ() {
-    const refServ = firebase.database().ref().child('loja/servico/'+selecionado);
+    const refServ = firebase.database().ref().child('servico/'+selecionado);
 
     refServ.once('value').then(function(snapshot) {
         var obj = snapshot.val();
