@@ -3,8 +3,11 @@
 // armazenamento de arquivos
 
 var urlProdutoSalvo;
+var produtoRef;
 var urlPromocaoSalvo;
+var promocaoRef;
 var urlServicoSalvo;
+var servicoRef;
 
 // funcoes importantes
 window.onload = function() {
@@ -25,7 +28,6 @@ var selecionado;
 
 function seleciona(id) {
     selecionado = document.getElementById(id).id;
-    console.log(selecionado);
 
 }
 
@@ -49,7 +51,6 @@ function addUser(usuario) {
     updates['/loja/usuario/' + newUserKey] = usuario;
 
     firebase.database().ref().update(updates);
-    location.reload();
 
 }
 
@@ -67,13 +68,11 @@ function editUser() {
     firebase.database().ref().update(updates);
 
     selecionado = null;
-    location.reload();
 }
 
 function dropUser() {
     firebase.database().ref().child('/loja/usuario/'+selecionado).remove();
-    selecionado = null;
-    location.reload();
+    showQuest("cli");
 }
 
     // produto
@@ -82,7 +81,8 @@ function criaProduto() {
         nome: formproduto.nomeProd.value,
         image: urlProdutoSalvo,
         descricao: formproduto.descProd.value,
-        ponto: formproduto.pontosProd.value
+        ponto: formproduto.pontosProd.value,
+        imageRef : produtoRef
     };
     addProduto(produto);
 }
@@ -94,13 +94,14 @@ function addProduto(produto) {
 
     firebase.database().ref().update(updates);
     urlProdutoSalvo = null;
-    location.reload();
+    produtoRef = null;
 }
 
 function editProduto() {
     var produto = {
         nome: formprodedit.nomeProdedit.value,
-        image: formprodedit.imgProdedit.value,
+        image: urlProdutoSalvo,
+        imageRef: produtoRef,
         descricao: formprodedit.descProdedit.value,
         ponto: formprodedit.pontosProdedit.value
     };
@@ -111,20 +112,37 @@ function editProduto() {
     firebase.database().ref().update(updates);
 
     selecionado = null;
-    location.reload();
+    urlProdutoSalvo = null;
+    produtoRef = null;
+
 }
 
 function dropProduto() {
-    firebase.database().ref().child('/loja/produto/' + selecionado).remove();
+    const refProd = firebase.database().ref().child('loja/produto/'+selecionado);
 
-    selecionado = null;
-    location.reload();
+    refProd.once('value').then(function(snapshot) {
+        var obj = snapshot.val();
+
+        var storageRef = firebase.storage().ref().child(obj.imageRef);
+
+        storageRef.delete().then(function() {
+            console.log("deletou Prod");
+        }).catch(function(error) {
+            console.log(error);
+        });
+
+        deletaNo(refProd);
+        showQuest("prod");
+    });
 }
+
+
 
     //promocao
 function criaPromocao() {
     var promocao = {
         image: urlPromocaoSalvo,
+        imageRef: promocaoRef,
         descricao: formpromocao.descProm.value
     };
     addPromocao(promocao);
@@ -136,13 +154,15 @@ function addPromocao(promocao) {
     updates['loja/promocao/' + newPromKey] = promocao;
 
     firebase.database().ref().update(updates);
+
+    promocaoRef = null;
     urlPromocaoSalvo = null;
-    location.reload();
 }
 
 function editPromocao() {
     var promocao = {
-        image: formpromedit.imgPromedit.value,
+        image: urlPromocaoSalvo,
+        imageRef: promocaoRef,
         descricao: formpromedit.descPromedit.value
     };
     var updates = {};
@@ -150,22 +170,34 @@ function editPromocao() {
 
     firebase.database().ref().update(updates);
 
+    promocaoRef = null;
     selecionado = null;
-    location.reload();
 }
 
 function dropPromocao() {
-    firebase.database().ref().child('/loja/promocao/' + selecionado).remove();
+    const refProm = firebase.database().ref().child('/loja/promocao/' + selecionado);
 
-    selecionado = null;
-    location.reload();
+    refProm.once('value').then(function(snapshot) {
+        var obj = snapshot.val();
+
+        var storageRef = firebase.storage().ref().child(obj.imageRef);
+
+        storageRef.delete();
+
+
+        deletaNo(refProm);
+        showQuest("prom");
+    });
 }
+
+
 
     // servico
 function criaServico() {
     var servico = {
         nome: formservico.nomeServ.value,
         image: urlServicoSalvo,
+        imageRef: servicoRef,
         descricao: formservico.descServ.value,
         ponto: formservico.pontosServ.value
     };
@@ -178,14 +210,15 @@ function addServico(servico) {
     updates['loja/servico/' + newServKey] = servico;
 
     firebase.database().ref().update(updates);
+    servicoRef = null;
     urlServicoSalvo = null;
-    location.reload();
 }
 
 function editServico() {
     var servico = {
         nome: formservicoedit.nomeServedit.value,
-        image: formservicoedit.imgServedit.value,
+        image: urlServicoSalvo,
+        imageRef: servicoRef,
         descricao: formservicoedit.descServedit.value,
         ponto: formservicoedit.pontosServedit.value
     };
@@ -194,18 +227,29 @@ function editServico() {
     updates['loja/servico/' + selecionado] = servico;
     firebase.database().ref().update(updates);
 
+    servicoRef = null;
     selecionado = null;
-    location.reload();
 }
 
 function dropServico() {
-    firebase.database().ref().child('/loja/servico/' + selecionado).remove();
+    const refServ = firebase.database().ref().child('/loja/servico/' + selecionado);
 
-    selecionado = null;
-    location.reload();
+    refServ.once('value').then(function(snapshot) {
+        var obj = snapshot.val();
+
+        var storageRef = firebase.storage().ref().child(obj.imageRef);
+
+        storageRef.delete();
+
+        deletaNo(refServ);
+        showQuest("serv");
+    });
+
 }
 
-
+function deletaNo(ref) {
+    ref.remove();
+}
 
 // recuperacao de dados
 
@@ -213,7 +257,8 @@ function clienteList() {
     const refUser = firebase.database().ref().child('loja/usuario');
     var clientelist = document.getElementById("clientelist");
 
-    refUser.once('value').then(function(snapshot) {
+    refUser.on('value', function(snapshot) {
+        clientelist.innerHTML = "";
         snapshot.forEach(function (item) {
             var obj = item.val();
 
@@ -224,7 +269,7 @@ function clienteList() {
             h4.setAttribute("value", obj.nome);
 
             var p = document.createElement('p');
-            p.appendChild(document.createTextNode("Pontos: "+obj.pontos));
+            p.appendChild(document.createTextNode("Sexo: "+obj.sexo+" | Email: "+obj.email+" | Pontos: "+obj.pontos));
             p.className = "list-group-item-text";
 
 
@@ -249,6 +294,7 @@ function produtoList() {
     var produtolist = document.getElementById("produtolist");
 
     refProd.on('value', function(snapshot) {
+        produtolist.innerHTML = "";
         snapshot.forEach(function (item) {
             var obj = item.val();
 
@@ -257,7 +303,7 @@ function produtoList() {
             h4.className = "media-heading";
 
             var p = document.createElement('p');
-            p.appendChild(document.createTextNode("Descrição: "+obj.descricao));
+            p.appendChild(document.createTextNode("Descrição: "+obj.descricao+" | Pontos: "+obj.ponto));
             p.className = "list-group-item-text";
 
             var divBody = document.createElement('div');
@@ -293,6 +339,7 @@ function promocaoList() {
     var promocaolist = document.getElementById("promocaolist");
 
     refProm.on('value', function(snapshot) {
+        promocaolist.innerHTML = "";
         snapshot.forEach(function (item) {
             var obj = item.val();
 
@@ -332,6 +379,7 @@ function servicoList() {
     var servicolist = document.getElementById("servicolist");
 
     refServ.on('value', function(snapshot) {
+        servicolist.innerHTML = "";
         snapshot.forEach(function (item) {
             var obj = item.val();
 
@@ -340,7 +388,7 @@ function servicoList() {
             h4.className = "media-heading";
 
             var p = document.createElement('p');
-            p.appendChild(document.createTextNode("Descrição: "+obj.descricao));
+            p.appendChild(document.createTextNode("Descrição: "+obj.descricao+" | Pontos: "+obj.ponto));
             p.className = "list-group-item-text";
 
             var divBody = document.createElement('div');
@@ -414,8 +462,38 @@ function imprimeFormProd() {
 
     refProd.once('value').then(function(snapshot) {
         var obj = snapshot.val();
-        document.getElementById("formprodedit").innerHTML = '<div class="form-group"> <label for="nomeProdedit">Nome:</label> <input class="form-control" type="text" id="nomeProdedit" value="'+ obj.nome +'"/> </div> <div  class="form-group"> <label for="imgProdedit">Imagem do Produto:</label> <input class="form-control" type="file" id="imgProdedit" value="'+ obj.image +'"/> </div> <div  class="form-group"> <label for="descProdedit">Descrição:</label> <input class="form-control" type="text" id="descProdedit" value="'+ obj.descricao +'"/> </div> <div  class="form-group"> <label for="pontosProdedit">Pontos:</label> <input class="form-control" type="number" id="pontosProdedit" value="'+ obj.ponto +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prod" type="reset" onclick="editProduto()">Salvar</button> </div>';
+        document.getElementById("formprodedit").innerHTML = '<div class="form-group"> <label for="nomeProdedit">Nome:</label> <input class="form-control" type="text" id="nomeProdedit" value="'+ obj.nome +'"/> </div> <div  class="form-group"> <label for="imgProdedit">Imagem do Produto:</label> <input class="form-control" type="file" id="imgProdedit" value="'+ obj.image +'"/>  </div> <div  class="form-group"> <label for="descProdedit">Descrição:</label> <input class="form-control" type="text" id="descProdedit" value="'+ obj.descricao +'"/> </div> <div  class="form-group"> <label for="pontosProdedit">Pontos:</label> <input class="form-control" type="number" id="pontosProdedit" value="'+ obj.ponto +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prod" type="reset" onclick="editProduto()">Salvar</button> </div>';
+        salvaImagemProd();
     });
+
+    function salvaImagemProd() {
+        if (document.getElementById('edit_prod').style.visibility === 'visible') {
+
+            var file = document.getElementById("imgProdedit");
+
+            file.addEventListener('change', function (e) {
+                console.log("entrou no listner");
+                var produto = e.target.files[0];
+                produtoRef = 'produto/'+produto.name;
+
+                var storageRef = firebase.storage().ref().child(produtoRef);
+                var task = storageRef.put(produto);
+
+                task.on('state_changed', function(snapshot){
+                }, function(error) {
+                    alert("Não foi possível salvar a imagem");
+                }, function() {
+                    storageRef.getDownloadURL().then(function(url) {
+                        console.log("entrou no entrou no get url");
+                        urlProdutoSalvo = url;
+                    }).catch(function(error) {
+                        alert("Não foi possível salvar a imagem");
+                    });
+                });
+
+            });
+        }
+    }
 }
 
 function imprimeFormProm() {
@@ -424,7 +502,38 @@ function imprimeFormProm() {
     refProm.once('value').then(function(snapshot) {
         var obj = snapshot.val();
         document.getElementById("formpromedit").innerHTML = '<div  class="form-group"> <label for="imgPromedit">Banner da Promoção:</label> <input class="form-control" type="file" id="imgPromedit" value="'+ obj.image +'"/> </div> <div  class="form-group"> <label for="descPromedit">Descrição:</label> <input class="form-control" type="text" id="descPromedit" value="'+ obj.descricao +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prom" type="reset" onclick="editPromocao()">Salvar</button> </div>';
+        salvaImagemProm();
     });
+
+    function salvaImagemProm() {
+        if (document.getElementById('edit_prom').style.visibility === 'visible') {
+            var file = document.getElementById("imgPromedit");
+
+
+            file.addEventListener('change', function (e) {
+
+
+                var promocao = e.target.files[0];
+                promocaoRef = 'promocao/'+promocao.name;
+
+                var storageRef = firebase.storage().ref().child(promocaoRef);
+                var task = storageRef.put(promocao);
+
+                task.on('state_changed', function(snapshot){
+                }, function(error) {
+                    alert("Não foi possível salvar a imagem");
+                }, function() {
+                    storageRef.getDownloadURL().then(function(url) {
+
+                        urlPromocaoSalvo = url;
+                    }).catch(function(error) {
+                        alert("Não foi possível salvar a imagem");
+                    });
+                });
+
+            });
+        }
+    }
 }
 function imprimeFormServ() {
     const refServ = firebase.database().ref().child('loja/servico/'+selecionado);
@@ -432,7 +541,38 @@ function imprimeFormServ() {
     refServ.once('value').then(function(snapshot) {
         var obj = snapshot.val();
         document.getElementById("formservicoedit").innerHTML = '<div class="form-group"> <label for="nomeServedit">Nome:</label> <input class="form-control"  type="text" id="nomeServedit" value="'+obj.nome+'"/> </div> <div  class="form-group"> <label for="imgServedit">Imagem da Promoção:</label> <input class="form-control" type="file" id="imgServedit" value="'+obj.image+'"/> </div> <div  class="form-group"> <label for="descServedit">Descrição:</label> <input class="form-control" type="text" id="descServedit" value="'+obj.descricao+'"/> </div> <div  class="form-group"> <label for="pontosServedit">Pontos:</label> <input class="form-control" type="number" id="pontosServedit" value="'+obj.ponto+'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-serv" type="reset" onclick="editServico()">Salvar</button> </div>';
+        salvaImagemServ();
     });
+
+    function salvaImagemServ() {
+        if (document.getElementById('edit_serv').style.visibility === 'visible') {
+
+            var file = document.getElementById("imgServedit");
+            console.log("entrou no script");
+
+            file.addEventListener('change', function (e) {
+                var servico = e.target.files[0];
+                console.log("entrou no listner");
+                servicoRef = 'servico/'+servico.name;
+
+                var storageRef = firebase.storage().ref().child(servicoRef);
+                var task = storageRef.put(servico);
+
+                task.on('state_changed', function(snapshot){
+                }, function(error) {
+                    alert("Não foi possível salvar a imagem");
+                }, function() {
+                    storageRef.getDownloadURL().then(function(url) {
+                        console.log("entrou no entrou no get url");
+                        urlServicoSalvo = url;
+                    }).catch(function(error) {
+                        alert("Não foi possível salvar a imagem");
+                    });
+                });
+
+            });
+        }
+    }
 }
 function imprimeMensagemEditErr() {
     alert("Selecione um elemento");

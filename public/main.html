@@ -149,7 +149,9 @@
                                         file.addEventListener('change', function (e) {
                                             var produto = e.target.files[0];
 
-                                            var storageRef = firebase.storage().ref().child('produto/' + produto.name);
+                                            produtoRef = 'produto/'+produto.name;
+                                            var storageRef = firebase.storage().ref().child(produtoRef);
+
                                             var task = storageRef.put(produto);
 
                                             task.on('state_changed', function(snapshot){
@@ -182,6 +184,7 @@
                             <div id='edit_prod' style="visibility:hidden;">
 
                                 <form id="formprodedit"></form>
+
 
                             </div>
                             <div id='exc_prod' class="panel panel-danger" style="visibility:hidden;">
@@ -226,7 +229,9 @@
                                     file.addEventListener('change', function (e) {
                                         var promocao = e.target.files[0];
 
-                                        var storageRef = firebase.storage().ref().child('promocao/' + promocao.name);
+                                        promocaoRef = 'promocao/'+promocao.name;
+
+                                        var storageRef = firebase.storage().ref().child(promocaoRef);
                                         var task = storageRef.put(promocao);
 
                                         task.on('state_changed', function(snapshot){
@@ -302,7 +307,9 @@
                                     file.addEventListener('change', function (e) {
                                         var servico = e.target.files[0];
 
-                                        var storageRef = firebase.storage().ref().child('servico/' + servico.name);
+                                        servicoRef = 'servico/'+servico.name;
+
+                                        var storageRef = firebase.storage().ref().child(servicoRef);
                                         var task = storageRef.put(servico);
 
                                         task.on('state_changed', function(snapshot){

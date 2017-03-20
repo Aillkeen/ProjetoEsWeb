@@ -34,9 +34,9 @@
     function toggleSignIn() {
 
       if (firebase.auth().currentUser) {
-        // [START signout]
+
         firebase.auth().signOut();
-        // [END signout]
+
       } else {
         var email = document.getElementById('inputUser').value;
         var password = document.getElementById('inputPassword').value;
@@ -48,13 +48,12 @@
           alert('Please enter a password.');
           return;
         }
-        // Sign in with email and pass.
-        // [START authwithemail]
+
         firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-          // Handle Errors here.
+
           var errorCode = error.code;
           var errorMessage = error.message;
-          // [START_EXCLUDE]
+
           if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
             alert('Senha ou usuário incorreto');
           } else {
@@ -62,9 +61,9 @@
           }
           console.log(error);
           document.getElementById('quickstart-sign-in').disabled = false;
-          // [END_EXCLUDE]
+
         });
-        // [END authwithemail]
+
       }
       document.getElementById('quickstart-sign-in').disabled = true;
 
@@ -89,7 +88,7 @@
         <label for="inputPassword" class="sr-only">Senha</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
         <br>
-        <button class="btn btn-lg btn-success btn-block" id="quickstart-sign-in" type="submit" onclick="toggleSignIn()">Entrar</button>
+        <button class="btn btn-lg  btn-block" id="quickstart-sign-in" type="submit" onclick="toggleSignIn()">Entrar</button>
       </form>
     </div>
     <footer class="row"  align="center">
