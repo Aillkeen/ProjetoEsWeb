@@ -150,7 +150,7 @@
                                         file.addEventListener('change', function (e) {
                                             var produto = e.target.files[0];
 
-                                            produtoRef = 'produto/'+produto.name;
+                                            produtoRef = 'Produtos/'+produto.name;
                                             var storageRef = firebase.storage().ref().child(produtoRef);
 
                                             var task = storageRef.put(produto);
@@ -231,7 +231,7 @@
                                         file.addEventListener('change', function (e) {
                                             var promocao = e.target.files[0];
 
-                                            promocaoRef = 'promocao/'+promocao.name;
+                                            promocaoRef = 'Promocoes/'+promocao.name;
 
                                             var storageRef = firebase.storage().ref().child(promocaoRef);
                                             var task = storageRef.put(promocao);
@@ -311,7 +311,7 @@
                                         file.addEventListener('change', function (e) {
                                             var servico = e.target.files[0];
 
-                                            servicoRef = 'servico/'+servico.name;
+                                            servicoRef = 'Servicos/'+servico.name;
 
                                             var storageRef = firebase.storage().ref().child(servicoRef);
                                             var task = storageRef.put(servico);
