@@ -13,7 +13,7 @@ var servicoRef;
 window.onload = function() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log("logado");
+
         } else {
             location.href="index.html";
         }

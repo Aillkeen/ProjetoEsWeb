@@ -13,7 +13,6 @@
 
       <!-- Bootstrap core CSS -->
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-      <link href="style/main.css" rel="stylesheet">
       <link href="style/signin.css" rel="stylesheet">
 
       <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
@@ -29,73 +28,25 @@
           firebase.initializeApp(config);
       </script>
 
-    <script>
-    /**
-     * Handles the sign in button press.
-     */
-    function toggleSignIn() {
-
-      if (firebase.auth().currentUser) {
-
-        firebase.auth().signOut();
-
-      } else {
-        var email = document.getElementById('inputUser').value;
-        var password = document.getElementById('inputPassword').value;
-        if (email.length < 4) {
-          alert('Please enter an email address.');
-          return;
-        }
-        if (password.length < 4) {
-          alert('Please enter a password.');
-          return;
-        }
-
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-
-          var errorCode = error.code;
-          var errorMessage = error.message;
-
-          if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
-            alert('Senha ou usuário incorreto');
-          } else {
-            alert(errorMessage);
-          }
-          console.log(error);
-          document.getElementById('quickstart-sign-in').disabled = false;
-
-        });
-
-      }
-      document.getElementById('quickstart-sign-in').disabled = true;
-
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          location.href="main.html"
-        }
-      });
-
-    }
-    </script>
+    <script src="controller/index.js"></script>
   </head>
   <body>
-
     <div class="container">
-     <div class="row">
-      <form class="form-signin col-md-4 col-sm-offset-4">
-        <img src="img\icone-login.png" class="img-responsive center-block">
-        <label for="inputUser" class="sr-only">Usuário</label>
-        <input type="user" id="inputUser" class="form-control" placeholder="Usuario" required autofocus>
-        <br>
-        <label for="inputPassword" class="sr-only">Senha</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
-        <br>
-        <button class="btn btn-lg btn-info btn-block" id="quickstart-sign-in" type="submit" onclick="toggleSignIn()">Entrar</button>
-      </form>
-    </div>
-  </div>
-    <footer class="row"  align="center">
-        <br> <p>Mr Smart &reg;</p>
-    </footer>
+            <div class="col-sm-6">
+                <img src="img/img-login.png" id="imgback">
+            </div>
+            <div class="col-sm-6">
+                <form class="form-signin col-sm-8">
+                    <img src="img/mr-smart-330px.png"id="img" class="img-responsive center-block">
+                    <label for="inputUser" class="sr-only">Usuário</label>
+                    <input type="user" id="inputUser" class="form-control" placeholder="Usuario" required autofocus>
+                    <br>
+                    <label for="inputPassword" class="sr-only">Senha</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+                    <br>
+                    <button class="btn btn-lg btn-info btn-block" id="quickstart-sign-in" type="submit" onclick="toggleSignIn()">Entrar</button>
+                </form>
+            </div>
+        </div>
   </body>
 </html>
