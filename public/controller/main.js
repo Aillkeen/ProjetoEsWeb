@@ -104,14 +104,39 @@ function addProduto(produto) {
 }
 
 function editProduto() {
-    var produto = {
-        nome: formprodedit.nomeProdedit.value,
-        image: urlProdutoSalvo,
-        imageRef: produtoRef,
-        descricao: formprodedit.descProdedit.value,
-        ponto: formprodedit.pontosProdedit.value
-    };
+    var produto;
+    if (urlProdutoSalvo === null) {
+        const refProd = firebase.database().ref().child('Produtos/' + selecionado);
 
+        refProd.once('value').then(function (snapshot) {
+            var obj = snapshot.val();
+            produto = {
+                nome: formprodedit.nomeProdedit.value,
+                image: obj.image,
+                imageRef: obj.imageRef,
+                descricao: formprodedit.descProdedit.value,
+                ponto: formprodedit.pontosProdedit.value
+            };
+
+            atualizaProd(produto);
+        });
+    } else {
+        produto = {
+            nome: formprodedit.nomeProdedit.value,
+            image: urlProdutoSalvo,
+            imageRef: produtoRef,
+            descricao: formprodedit.descProdedit.value,
+            ponto: formprodedit.pontosProdedit.value
+        };
+
+        atualizaProd(produto);
+    }
+
+
+
+}
+
+function atualizaProd(produto){
     var updates = {};
     updates['Produtos/' + selecionado] = produto;
 
@@ -121,7 +146,6 @@ function editProduto() {
     urlProdutoSalvo = null;
     produtoRef = null;
     $('#edit_prod').hide();
-
 }
 
 function dropProduto() {
@@ -133,7 +157,6 @@ function dropProduto() {
         var storageRef = firebase.storage().ref().child(obj.imageRef);
 
         storageRef.delete().then(function() {
-            console.log("deletou Prod");
         }).catch(function(error) {
             console.log(error);
         });
@@ -167,11 +190,31 @@ function addPromocao(promocao) {
 }
 
 function editPromocao() {
-    var promocao = {
-        image: urlPromocaoSalvo,
-        imageRef: promocaoRef,
-        descricao: formpromedit.descPromedit.value
-    };
+    var promocao;
+    if (urlPromocaoSalvo === null){
+        const refProm = firebase.database().ref().child('Promocoes/' + selecionado);
+
+        refProm.once('value').then(function (snapshot) {
+            var obj = snapshot.val();
+            promocao = {
+                image: obj.image,
+                imageRef: obj.imageRef,
+                descricao: formpromedit.descPromedit.value
+            };
+            atualizaPromocao(promocao);
+        });
+    } else {
+        promocao = {
+            image: urlPromocaoSalvo,
+            imageRef: promocaoRef,
+            descricao: formpromedit.descPromedit.value
+        };
+
+        atualizaPromocao(promocao);
+    }
+}
+
+function atualizaPromocao(promocao) {
     var updates = {};
     updates['Promocoes/' + selecionado] = promocao;
 
@@ -224,14 +267,37 @@ function addServico(servico) {
 }
 
 function editServico() {
-    var servico = {
-        nome: formservicoedit.nomeServedit.value,
-        image: urlServicoSalvo,
-        imageRef: servicoRef,
-        descricao: formservicoedit.descServedit.value,
-        ponto: formservicoedit.pontosServedit.value
-    };
+    var servico;
+    if (urlServicoSalvo === null) {
+        const refServ = firebase.database().ref().child('Servicos/' + selecionado);
 
+        refServ.once('value').then(function(snapshot) {
+            var obj = snapshot.val();
+            servico = {
+                nome: formservicoedit.nomeServedit.value,
+                image: obj.image,
+                imageRef: obj.imageRef,
+                descricao: formservicoedit.descServedit.value,
+                ponto: formservicoedit.pontosServedit.value
+            };
+
+            atualizaServico(servico);
+        });
+    }
+    else {
+        servico = {
+            nome: formservicoedit.nomeServedit.value,
+            image: urlServicoSalvo,
+            imageRef: servicoRef,
+            descricao: formservicoedit.descServedit.value,
+            ponto: formservicoedit.pontosServedit.value
+        };
+
+        atualizaServico(servico);
+    }
+}
+
+function atualizaServico(servico) {
     var updates = {};
     updates['Servicos/' + selecionado] = servico;
     firebase.database().ref().update(updates);
@@ -469,20 +535,17 @@ function imprimeFormProd() {
 
     refProd.once('value').then(function(snapshot) {
         var obj = snapshot.val();
-        console.log("imprimindo Produto pelo inner");
         document.getElementById("formprodedit").innerHTML = '<div  class="form-group"> <label for="imgProdedit">Imagem do Produto:</label> <input class="form-control" type="file" id="imgProdedit" value="'+ obj.image +'"/> <progress max="100" id="uploaderedit-prod"></progress> </div><div class="form-group"> <label for="nomeProdedit">Nome:</label> <input class="form-control" type="text" id="nomeProdedit" value="'+ obj.nome +'"/> </div>  <div  class="form-group"> <label for="descProdedit">Descrição:</label> <input class="form-control" type="text" id="descProdedit" value="'+ obj.descricao +'"/> </div> <div  class="form-group"> <label for="pontosProdedit">Pontos:</label> <input class="form-control" type="number" id="pontosProdedit" value="'+ obj.ponto +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prod" type="reset" onclick="editProduto()">Salvar</button> </div>';
         salvaImagemProd();
     });
 
     function salvaImagemProd() {
+        urlProdutoSalvo = null;
         var file = document.getElementById("imgProdedit");
         var uploader = document.getElementById("uploaderedit-prod");
-        var botao = document.getElementById("botaoedit-prod");
 
         file.addEventListener('change', function (e) {
             var produto = e.target.files[0];
-            botao.disable = true;
-
             produtoRef = 'Produtos/'+produto.name;
             var storageRef = firebase.storage().ref().child(produtoRef);
 
@@ -490,6 +553,7 @@ function imprimeFormProd() {
 
             task.on('state_changed',
                 function progress(snapshot){
+                    document.getElementById("botaoedit-prod").disabled = true;
                     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
                     uploader.value = percentage;
                 },
@@ -500,7 +564,7 @@ function imprimeFormProd() {
                 function() {
                     storageRef.getDownloadURL().then(function(url) {
                         urlProdutoSalvo = url;
-                        botao.disable = false;
+                        document.getElementById("botaoedit-prod").disabled = false;
                     }).catch(function(error) {
                         alert("Não foi possível salvar a imagem");
                     });
@@ -514,20 +578,18 @@ function imprimeFormProm() {
     const refProm = firebase.database().ref().child('Promocoes/'+selecionado);
 
     refProm.once('value').then(function(snapshot) {
-        console.log("imprimindo Produto pelo inner");
         var obj = snapshot.val();
         document.getElementById("formpromedit").innerHTML = '<div  class="form-group"> <label for="imgPromedit">Banner da Promoção:</label> <input class="form-control" type="file" id="imgPromedit" value="'+ obj.image +'"/> <progress max="100" id="uploaderedit-prom"></progress> </div> <div  class="form-group"> <label for="descPromedit">Descrição:</label> <input class="form-control" type="text" id="descPromedit" value="'+ obj.descricao +'"/> </div> <div class="button"> <button class="btn btn-block btn-primary btn-sm" id="botaoedit-prom" type="reset" onclick="editPromocao()">Salvar</button> </div>';
         salvaImagemProm();
     });
 
     function salvaImagemProm() {
+        urlPromocaoSalvo = null;
         var file = document.getElementById("imgPromedit");
         var uploader = document.getElementById("uploaderedit-prom");
-        var botao = document.getElementById("botaoedit-prom");
 
         file.addEventListener('change', function (e) {
 
-            console.log("entrou no listner");
             var promocao = e.target.files[0];
             promocaoRef = 'Promocoes/'+promocao.name;
 
@@ -536,6 +598,7 @@ function imprimeFormProm() {
 
             task.on('state_changed',
                 function progress(snapshot){
+                    document.getElementById("botaoedit-prom").disabled = true;
                     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
                     uploader.value = percentage;
                 },
@@ -544,9 +607,8 @@ function imprimeFormProm() {
                 },
                 function() {
                     storageRef.getDownloadURL().then(function(url) {
-                        botao.disable = false;
                         urlPromocaoSalvo = url;
-                        console.log("pegou url");
+                        document.getElementById("botaoedit-prom").disabled = false;
                     }).catch(function(error) {
                         alert("Não foi possível salvar a imagem");
                     });
@@ -565,9 +627,9 @@ function imprimeFormServ() {
     });
 
     function salvaImagemServ() {
+        urlServicoSalvo = null;
         var file = document.getElementById("imgServedit");
         var uploader = document.getElementById("uploaderedit-serv");
-        var botao = document.getElementById("botaoedit-serv");
 
         file.addEventListener('change', function (e) {
             var servico = e.target.files[0];
@@ -579,6 +641,7 @@ function imprimeFormServ() {
 
             task.on('state_changed',
                 function progress(snapshot){
+                    document.getElementById("botaoedit-serv").disabled = true;
                     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
                     uploader.value = percentage;
                 },
@@ -589,7 +652,7 @@ function imprimeFormServ() {
                 function() {
                     storageRef.getDownloadURL().then(function(url) {
                         urlServicoSalvo = url;
-                        botao.disable = false;
+                        document.getElementById("botaoedit-serv").disabled = false;
                     }).catch(function(error) {
                         alert("Não foi possível salvar a imagem");
                     });
@@ -610,7 +673,6 @@ function showEdit(id) {
             imprimeFormProd();
         }
         else if (id === 'prom') {
-            console.log("acessa showEdit");
             imprimeFormProm();
         }
         else if (id === 'serv') {
@@ -642,30 +704,25 @@ $(document).ready(function(){
     $('#pai').children('div').hide();
 
     $('#btn-add').click(function(){
-        console.log('adicionar');
         $('#pai').children('div').hide();
         $('#form_cli').show();
     });
     $('#btn-edit').click(function(){
-        console.log('editar');
         $('#pai').children('div').hide();
         $('#edit_cli').show();
     });
     $('#btn-delet').click(function(){
-        console.log('delet');
         $('#pai').children('div').hide();
         if(selecionado){
             $('#exc_cli').show();
         }
     });
     $('#btn1-cancelar').click(function(){
-        console.log('cancelar');
         $('#pai').children('div').hide();
         $('#exc_cli').hide();
     });
 
     $('#btn1-remove').click(function(){
-        console.log('cancelar');
         $('#pai').children('div').hide();
         $('#exc_cli').hide();
     });
@@ -675,30 +732,25 @@ $(document).ready(function(){
     $('#pai-2').children('div').hide();
 
     $('#btn1-prod').click(function(){
-        console.log('adicionar');
         $('#pai-2').children('div').hide();
         $('#form_prod').show();
     });
     $('#btn2-prod').click(function(){
-        console.log('editar');
         $('#pai-2').children('div').hide();
         $('#edit_prod').show();
     });
     $('#btn3-prod').click(function(){
-        console.log('delet');
         $('#pai-2').children('div').hide();
         if(selecionado){
             $('#exc_prod').show();
         }
     });
     $('#btn2-cancelar').click(function(){
-        console.log('cancelar');
         $('#pai-2').children('div').hide();
         $('#exc_prod').hide();
     });
 
     $('#btn2-remove').click(function(){
-        console.log('cancelar');
         $('#pai').children('div').hide();
         $('#exc_cli').hide();
     });
@@ -707,29 +759,24 @@ $(document).ready(function(){
     $('#pai-3').children('div').hide();
 
     $('#btn1-prom').click(function(){
-        console.log('adicionar');
         $('#pai-3').children('div').hide();
         $('#form_prom').show();
     });
     $('#btn2-prom').click(function(){
-        console.log('editar');
         $('#pai-3').children('div').hide();
         $('#edit_prom').show();
     });
     $('#btn3-prom').click(function(){
-        console.log('delet');
         $('#pai-3').children('div').hide();
         if(selecionado){
             $('#exc_prom').show();
         }
     });
     $('#btn3-cancelar').click(function(){
-        console.log('cancelar');
         $('#pai-3').children('div').hide();
         $('#exc_prom').hide();
     });
     $('#btn3-remove').click(function(){
-        console.log('cancelar');
         $('#pai').children('div').hide();
         $('#exc_cli').hide();
     });
@@ -739,29 +786,24 @@ $(document).ready(function(){
     $('#pai-4').children('div').hide();
 
     $('#btn1-serv').click(function(){
-        console.log('adicionar');
         $('#pai-4').children('div').hide();
         $('#form_serv').show();
     });
     $('#btn2-serv').click(function(){
-        console.log('editar');
         $('#pai-4').children('div').hide();
         $('#edit_serv').show();
     });
     $('#btn3-serv').click(function(){
-        console.log('delet');
         $('#pai-4').children('div').hide();
         if(selecionado){
             $('#exc_serv').show();
         }
     });
     $('#btn4-cancelar').click(function(){
-        console.log('cancelar');
         $('#pai-4').children('div').hide();
         $('#exc_serv').hide();
     });
     $('#btn4-remove').click(function(){
-        console.log('cancelar');
         $('#pai').children('div').hide();
         $('#exc_cli').hide();
     });

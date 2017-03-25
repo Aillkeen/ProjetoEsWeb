@@ -13,11 +13,12 @@
 
 form {
     margin-top: 20%;
-    margin-left: 25%;
+    margin-left: 20%;
 }
 body {
     height: 100%;
     width: 100%;
+    background-color: #f1f1f1;
 
 }
 
@@ -30,7 +31,6 @@ body {
 .container {
     height: 100%;
     width: 100%;
-    position: absolute;
     background-image: linear-gradient(to bottom, #f9f9f9, #f1f1f1);
 }
 

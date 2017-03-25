@@ -7,7 +7,7 @@
     <meta name="author" content="HelRaph">
     <!--  <link rel="icon" href="../../favicon.ico">-->
 
-    <title>MisterSmart</title>
+    <title>Mr. Smart</title>
     <link rel="shortcut icon" href="img/logo-icon.png" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -35,11 +35,11 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <ul class="nav nav-tabs col-md-11" id="menu">
             <div class="navbar-header">
-                <a class="navbar-brand">MrSmart</a>
+                <a class="navbar-brand">Mr. Smart</a>
             </div>
             <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
             <li><a data-toggle="tab" href="#produtos">Produtos</a></li>
@@ -143,7 +143,7 @@
                                     <div  class="form-group">
                                         <label for="imgProd">Imagem do Produto:</label>
                                         <input class="form-control" type="file" id="imgProd" />
-                                        <progress max="100" id="uploader-prod"></progress>
+                                        <progress value="0" max="100" id="uploader-prod"></progress>
                                     </div>
                                     <div class="form-group">
                                         <label for="nomeProd">Nome:</label>
@@ -163,12 +163,9 @@
                                     <script>
                                         var file = document.getElementById("imgProd");
                                         var uploader = document.getElementById("uploader-prod");
-                                        var botao = document.getElementById("botao-salva-prod");
 
                                         file.addEventListener('change', function (e) {
                                             var produto = e.target.files[0];
-                                            botao.disable = true;
-
                                             produtoRef = 'Produtos/'+produto.name;
                                             var storageRef = firebase.storage().ref().child(produtoRef);
 
@@ -176,8 +173,8 @@
 
                                             task.on('state_changed',
                                                 function progress(snapshot){
-                                                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
-                                                    uploader.value = percentage;
+                                                    document.getElementById("botao-salva-prod").disabled = true;
+                                                    uploader.value = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                                                 },
                                                 function(error) {
                                                     alert("Não foi possível salvar a imagem" + error);
@@ -186,7 +183,7 @@
                                                 function() {
                                                     storageRef.getDownloadURL().then(function(url) {
                                                         urlProdutoSalvo = url;
-                                                        botao.disable = false;
+                                                        document.getElementById("botao-salva-prod").disabled = false;
                                                     }).catch(function(error) {
                                                         alert("Não foi possível salvar a imagem");
                                                 });
@@ -252,12 +249,9 @@
                                     <script>
                                         var file = document.getElementById("imgProm");
                                         var uploader = document.getElementById("uploader-prom");
-                                        var botao = document.getElementById("botao-salva-prom");
 
                                         file.addEventListener('change', function (e) {
                                             var promocao = e.target.files[0];
-
-                                            console.log("entrou no listner")
 
                                             promocaoRef = 'Promocoes/'+promocao.name;
 
@@ -266,6 +260,7 @@
 
                                             task.on('state_changed',
                                                 function progress(snapshot){
+                                                    document.getElementById("botao-salva-prom").disabled = true;
                                                     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
                                                     uploader.value = percentage;
                                                 },
@@ -274,9 +269,8 @@
                                                 },
                                                 function() {
                                                     storageRef.getDownloadURL().then(function(url) {
-                                                        botao.disable = false;
                                                         urlPromocaoSalvo = url;
-                                                        console.log("pegou url");
+                                                        document.getElementById("botao-salva-prom").disabled = false;
                                                     }).catch(function(error) {
                                                         alert("Não foi possível salvar a imagem");
                                                     });
@@ -351,7 +345,6 @@
                                     <script>
                                         var file = document.getElementById("imgServ");
                                         var uploader = document.getElementById("uploader-serv");
-                                        var botao = document.getElementById("botao-salva-serv");
 
                                         file.addEventListener('change', function (e) {
                                             var servico = e.target.files[0];
@@ -363,6 +356,7 @@
 
                                             task.on('state_changed',
                                                 function progress(snapshot){
+                                                    document.getElementById("botao-salva-serv").disabled = true;
                                                     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
                                                     uploader.value = percentage;
                                                 },
@@ -373,7 +367,7 @@
                                                 function() {
                                                     storageRef.getDownloadURL().then(function(url) {
                                                         urlServicoSalvo = url;
-                                                        botao.disable = false;
+                                                        document.getElementById("botao-salva-serv").disabled = false;
                                                     }).catch(function(error) {
                                                         alert("Não foi possível salvar a imagem");
                                                     });
@@ -414,10 +408,11 @@
             <br><br>
         </div>
     </div>
+    <!-- rodape -->
+    <footer class="footer">
+        <br><br><p>Mr. Smart &reg;</p>
+    </footer>
 </div>
-<!-- rodape -->
-<footer class="row" align="center">
-    <br><div class="row"><br><br> </div><p>Mr Smart &reg;</p>
-</footer>
+
 </body>
 </html>

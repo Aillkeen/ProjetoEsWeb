@@ -1,10 +1,10 @@
 body {
-    background-image: linear-gradient(to bottom, #424242, #242424);
+    background-color: #e8e8e8;
 }
-
-.container-fluid {
+.container {
+    height: 100%;
     width: 100%;
-    background-image: linear-gradient(to bottom, #f9f9f9, #e8e8e8);
+    background-image: linear-gradient( to bottom, #f9f9f9, #e8e8e8);
 }
 
 a {
@@ -15,10 +15,10 @@ a:hover {
     color: #185a70;
 }
 
-footer {
-    color: #F8F8F8;
+.footer {
+    color: #1d1c1d;
+    width: 100%;
     text-align: center;
-    height: 50%;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
     background-color: #18232b;
