@@ -59,10 +59,12 @@
             <div id="clientes" class="tab-pane fade in active" >
                 <h3>Clientes</h3>
                 <div class="row list-group nav-tabs">
-                    <div class="col-md-6" id="clientelist">
-                        <script>
-                            laco("cliente");
-                        </script>
+                    <div class="scroll col-md-6">
+                        <div id="clientelist">
+                            <script>
+                                laco("cliente");
+                            </script>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div id='pai'>
@@ -92,7 +94,7 @@
                                     </div>
                                     <div  class="form-group">
                                         <label for="pontos">Pontos:</label>
-                                        <input class="form-control" type="number" id="pontos" placeholder="Insira os pontos"/>
+                                        <input class="form-control" type="number" id="pontos" value="0" placeholder="Insira os pontos"/>
                                     </div>
                                     <div class="button">
                                         <button class="btn btn-block btn-success btn-sm" id="botao-salva-user" type="reset" onclick="criaUser()">Salvar</button>
@@ -130,10 +132,12 @@
             <div id="produtos" class="tab-pane fade">
                 <h3>Produtos</h3>
                 <div class="row list-group nav-tabs">
-                    <div class="media col-md-6" id="produtolist">
-                        <script>
-                            laco("produto");
-                        </script>
+                    <div class="scroll col-md-6">
+                        <div class="media" id="produtolist">
+                            <script>
+                                laco("produto");
+                            </script>
+                        </div>
                     </div>
 
                     <div class="col-md-6">
@@ -155,7 +159,7 @@
                                     </div>
                                     <div  class="form-group">
                                         <label for="pontosProd">Pontos:</label>
-                                        <input class="form-control" type="number" id="pontosProd" />
+                                        <input class="form-control" type="number" value="0" id="pontosProd" />
                                     </div>
                                     <div class="button">
                                         <button class="btn btn-block btn-success btn-sm" id="botao-salva-prod" type="reset" onclick="criaProduto()">Salvar</button>
@@ -224,10 +228,12 @@
             <div id="promocoes" class="tab-pane fade">
                 <h3>Promoções</h3>
                 <div class="row list-group nav-tabs">
-                    <div class="media col-md-6" id="promocaolist">
-                        <script>
-                            laco("promoções");
-                        </script>
+                    <div class="scroll col-md-6">
+                        <div class="media" id="promocaolist">
+                            <script>
+                                laco("promoções");
+                            </script>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div id='pai-3'>
@@ -312,10 +318,12 @@
             <div id="servicos" class="tab-pane fade">
                 <h3>Serviços</h3>
                 <div class="row list-group nav-tabs">
-                    <div class="col-md-6" id="servicolist">
-                        <script>
-                            laco("serviços");
-                        </script>
+                    <div class="scroll col-md-6">
+                        <div id="servicolist">
+                            <script>
+                                laco("serviços");
+                            </script>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div id='pai-4'>
@@ -336,7 +344,7 @@
                                     </div>
                                     <div  class="form-group">
                                         <label for="pontosServ">Pontos:</label>
-                                        <input class="form-control" type="number" id="pontosServ" />
+                                        <input class="form-control" type="number" value="0" id="pontosServ" />
                                     </div>
                                     <div class="button">
                                         <button class="btn btn-block btn-success btn-sm" id="botao-salva-serv" type="reset" onclick="criaServico()">Salvar</button>

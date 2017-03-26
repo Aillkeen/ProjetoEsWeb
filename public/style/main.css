@@ -78,3 +78,8 @@ a:hover {
     background-image: linear-gradient(to bottom, #3f000d, #3f000d);
     border-color: #692a2f #692a2f #692a2f;
 }
+
+.scroll {
+    height:425px;
+    overflow:auto;
+}

@@ -76,7 +76,6 @@ function dropUser() {
     firebase.database().ref().child('Usuarios/'+selecionado).remove();
     selecionado = null;
     $('#exc_cli').hide();
-
 }
 
 // Produtos
